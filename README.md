@@ -1,25 +1,66 @@
-# Ivy-tree
+# ivy-tree
 
-This README outlines the details of collaborating on this Ember addon.
+[![Build Status](https://travis-ci.org/IvyApp/ivy-tree.svg?branch=master)](https://travis-ci.org/IvyApp/ivy-tree)
+
+A group of [Ember.js Components] that interact to create a [WAI-ARIA tree]
+interface.
 
 ## Installation
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
+### As as Ember CLI addon
 
-## Running
+Use this addon in your ember-cli application:
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+```sh
+npm install --save-dev IvyApp/ivy-tree
+```
 
-## Running Tests
+## Usage
 
-* `ember test`
-* `ember test --server`
+```handlebars
+```
 
-## Building
+## Contributing
 
-* `ember build`
+Fork this repo, make a new branch, and send a pull request. Make sure your
+change is tested or it won't be merged.
 
-For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
+### Installation
+
+```sh
+git clone git@github.com:IvyApp/ivy-tree.git
+cd ivy-tree
+npm install
+```
+
+### Running
+
+```sh
+ember server
+```
+
+Then visit your app at [http://localhost:4200](http://localhost:4200).
+
+### Running Tests
+
+```sh
+ember test
+```
+
+Or, to start a test server:
+
+```sh
+ember test --server
+```
+
+### Building
+
+```sh
+ember build
+```
+
+For more information on using ember-cli, visit
+[http://www.ember-cli.com/](http://www.ember-cli.com/).
+
+[Ember.js Components]: http://emberjs.com/guides/components/
+[WAI-ARIA tree]: http://www.w3.org/TR/wai-aria/roles#tree
