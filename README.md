@@ -18,7 +18,44 @@ npm install --save-dev IvyApp/ivy-tree
 ## Usage
 
 ```handlebars
+{{#ivy-tree}}
+  {{#ivy-tree-item}}
+    <span>Fruits</span>
+    {{#ivy-tree-group}}
+      {{#ivy-tree-item}}Oranges{{/ivy-tree-item}}
+      {{#ivy-tree-item}}Pineapples{{/ivy-tree-item}}
+      {{#ivy-tree-item}}
+        <span>Apples</span>
+        {{#ivy-tree-group}}
+          {{#ivy-tree-item}}Macintosh{{/ivy-tree-item}}
+          {{#ivy-tree-item}}
+            <span>Granny Smith</span>
+            {{#ivy-tree-group}}
+              {{#ivy-tree-item}}Washington State{{/ivy-tree-item}}
+              {{#ivy-tree-item}}Michigan{{/ivy-tree-item}}
+              {{#ivy-tree-item}}New York{{/ivy-tree-item}}
+            {{/ivy-tree-group}}
+          {{/ivy-tree-item}}
+          {{#ivy-tree-item}}Fuji{{/ivy-tree-item}}
+        {{/ivy-tree-group}}
+      {{/ivy-tree-item}}
+      {{#ivy-tree-item}}Bananas{{/ivy-tree-item}}
+      {{#ivy-tree-item}}Pears{{/ivy-tree-item}}
+    {{/ivy-tree-group}}
+  {{/ivy-tree-item}}
+  {{#ivy-tree-item}}
+    <span>Vegetables</span>
+    {{#ivy-tree-group}}
+      {{#ivy-tree-item}}Broccoli{{/ivy-tree-item}}
+      {{#ivy-tree-item}}Carrots{{/ivy-tree-item}}
+    {{/ivy-tree-group}}
+  {{/ivy-tree-item}}
+{{/ivy-tree}}
 ```
+
+Some things to note:
+
+* `ivy-tree-group` must be an immediate child of `ivy-tree-item`.
 
 ## Contributing
 
