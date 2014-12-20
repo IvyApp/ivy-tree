@@ -1,0 +1,61 @@
+<div id="application" role="application">
+
+<h2 id="label_1">Foods</h2>
+{{#ivy-tree label="label_1" class="tree root-level" aria-labelledby="label_1"}}
+  {{#ivy-tree-item class="tree-parent"}}
+    <span>Fruits</span>
+    {{#ivy-tree-group}}
+      {{#ivy-tree-item}}Oranges{{/ivy-tree-item}}
+      {{#ivy-tree-item}}Pineapples{{/ivy-tree-item}}
+      {{#ivy-tree-item class="tree-parent"}}
+        <span>Apples</span>
+        {{#ivy-tree-group}}
+          {{#ivy-tree-item}}Macintosh{{/ivy-tree-item}}
+          {{#ivy-tree-item class="tree-parent"}}
+            <span>Granny Smith</span>
+            {{#ivy-tree-group}}
+              {{#ivy-tree-item}}Washington State{{/ivy-tree-item}}
+              {{#ivy-tree-item}}Michigan{{/ivy-tree-item}}
+              {{#ivy-tree-item}}New York{{/ivy-tree-item}}
+            {{/ivy-tree-group}}
+          {{/ivy-tree-item}}
+          {{#ivy-tree-item}}Fuji{{/ivy-tree-item}}
+        {{/ivy-tree-group}}
+      {{/ivy-tree-item}}
+      {{#ivy-tree-item}}Bananas{{/ivy-tree-item}}
+      {{#ivy-tree-item}}Pears{{/ivy-tree-item}}
+    {{/ivy-tree-group}}
+  {{/ivy-tree-item}}
+  {{#ivy-tree-item class="tree-parent"}}
+    <span>Vegetables</span>
+    {{#ivy-tree-group}}
+      {{#ivy-tree-item}}Broccoli{{/ivy-tree-item}}
+      {{#ivy-tree-item}}Carrots{{/ivy-tree-item}}
+      {{#ivy-tree-item class="tree-parent"}}
+        <span>Lettuce</span>
+        {{#ivy-tree-group}}
+          {{#ivy-tree-item}}Romaine{{/ivy-tree-item}}
+          {{#ivy-tree-item}}Iceberg{{/ivy-tree-item}}
+          {{#ivy-tree-item}}Butterhead{{/ivy-tree-item}}
+        {{/ivy-tree-group}}
+      {{/ivy-tree-item}}
+      {{#ivy-tree-item}}Spinach{{/ivy-tree-item}}
+      {{#ivy-tree-item class="tree-parent"}}
+        <span>Squash</span>
+        {{#ivy-tree-group}}
+          {{#ivy-tree-item}}Acorn{{/ivy-tree-item}}
+          {{#ivy-tree-item}}Ambercup{{/ivy-tree-item}}
+          {{#ivy-tree-item}}Autumn Cup{{/ivy-tree-item}}
+          {{#ivy-tree-item}}Hubbard{{/ivy-tree-item}}
+          {{#ivy-tree-item}}Kabocha{{/ivy-tree-item}}
+          {{#ivy-tree-item}}Butternut{{/ivy-tree-item}}
+          {{#ivy-tree-item}}Spaghetti{{/ivy-tree-item}}
+          {{#ivy-tree-item}}Sweet Dumpling{{/ivy-tree-item}}
+          {{#ivy-tree-item}}Turban{{/ivy-tree-item}}
+        {{/ivy-tree-group}}
+      {{/ivy-tree-item}}
+    {{/ivy-tree-group}}
+  {{/ivy-tree-item}}
+{{/ivy-tree}}
+
+</div>

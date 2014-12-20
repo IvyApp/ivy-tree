@@ -1,3 +1,40 @@
-html, body {
-  margin: 20px;
+h2#label_1 {
+margin: .5em 0 !important;
+padding: 0 !important;
+font-size: 1.6em !important;
+}
+ul.tree {
+  width: 16em;
+  font-size: 100% !important;
+}
+ul.tree, ul.tree ul {
+  list-style: none;
+  margin: 0 !important;
+  padding-left: 20px !important;
+  font-weight: normal;
+  font-size: 100% !important;
+  background-color: #f9f9f9;
+  color: black;
+}
+
+ul.tree li {
+  margin-left: 17px !important;
+}
+
+ul[aria-hidden=true] {
+  display: none;
+}
+
+li.tree-parent {
+  font-weight: bold;
+  margin-left: 0px;
+}
+
+img.headerImg {
+  margin-right: 5px;
+}
+
+li.tree-focus {
+  color: white;
+  background: black;
 }
