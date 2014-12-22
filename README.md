@@ -55,6 +55,7 @@ npm install --save-dev IvyApp/ivy-tree
 
 Some things to note:
 
+* `ivy-tree-item` must be an immediate child of `ivy-tree`.
 * `ivy-tree-group` must be an immediate child of `ivy-tree-item`.
 
 ## Contributing

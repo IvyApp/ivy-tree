@@ -56,7 +56,29 @@ test('WAI-ARIA attributes', function() {
   ok(!treeItem3.attr('aria-expanded'), 'tree-item: aria-expanded unused');
 });
 
-test('toggles item expansion on double click', function() {
+test('sets an optional expandedItemClass class when expanded', function() {
+  var component = this.subject({
+    template: basicTemplate,
+    expandedItemClass: 'expanded-class-name'
+  });
+  this.append();
+
+  var treeItem1 = component.$('#treeItem1');
+  ok(treeItem1.hasClass('expanded-class-name'), 'tree-item: expandedClass');
+});
+
+test('sets an optional collapsedItemClass class when collapsed', function() {
+  var component = this.subject({
+    template: basicTemplate,
+    collapsedItemClass: 'collapsed-class-name'
+  });
+  this.append();
+
+  var treeItem2 = component.$('#treeItem2');
+  ok(treeItem2.hasClass('collapsed-class-name'), 'tree-item: collapsedClass');
+});
+
+test('double-click toggles the clicked parent node expansion', function() {
   var component = this.subject({
     template: basicTemplate
   });
