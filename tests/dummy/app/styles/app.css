@@ -3,10 +3,6 @@ html, body {
 }
 
 .list-group-item {
-  -moz-user-select: -moz-none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
   user-select: none;
   cursor: default;
   background-color: rgba(0,150,0,0.1);
