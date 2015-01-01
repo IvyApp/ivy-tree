@@ -9,6 +9,7 @@ html, body {
   -ms-user-select: none;
   user-select: none;
   cursor: default;
+  background-color: rgba(0,150,0,0.1);
 }
 
 .list-group {
