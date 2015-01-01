@@ -5,7 +5,7 @@ import Ember from 'ember';
  */
 
 /**
- * @class IvyTreeComponent
+ * @class IvyTreeGroupComponent
  * @namespace IvyTree
  * @extends Ember.Component
  */
