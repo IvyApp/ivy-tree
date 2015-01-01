@@ -16,6 +16,12 @@ html, body {
   max-width: 400px;
 }
 
+.list-toggle {
+  cursor: pointer;
+  font-size: 75%;
+  color: rgba(0,50,0,0.5);
+}
+
 ul[aria-hidden=true] {
   display: none;
 }
