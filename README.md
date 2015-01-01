@@ -26,6 +26,7 @@ npm install --save-dev IvyApp/ivy-tree
       {{#ivy-tree-item}}Pineapples{{/ivy-tree-item}}
       {{#ivy-tree-item}}
         <span>Apples</span>
+        {{#ivy-tree-item-toggle tagName="span"}}(toggle){{/ivy-tree-item-toggle}}
         {{#ivy-tree-group}}
           {{#ivy-tree-item}}Macintosh{{/ivy-tree-item}}
           {{#ivy-tree-item}}
