@@ -17,6 +17,9 @@ npm install --save-dev IvyApp/ivy-tree
 
 ## Usage
 
+The following example is adapted from the [OpenAjax Alliance Accessibility
+Treeview Example][tree example]:
+
 ```handlebars
 {{#ivy-tree}}
   {{#ivy-tree-item}}
@@ -104,3 +107,4 @@ For more information on using ember-cli, visit
 
 [Ember.js Components]: http://emberjs.com/guides/components/
 [WAI-ARIA tree]: http://www.w3.org/TR/wai-aria/roles#tree
+[tree example]: http://oaa-accessibility.org/examplep/treeview1/
