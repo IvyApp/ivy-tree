@@ -48,7 +48,7 @@ test('WAI-ARIA attributes', function() {
   equal(treeGroup1.attr('role'), 'group', 'tree-group: role');
   ok(!treeGroup1.attr('tabIndex'), 'tree-group: carries no tabIndex');
 
-  var treeToggle1 = component.$("#treeToggle1");
+  var treeToggle1 = component.$('#treeToggle1');
   equal(treeToggle1.attr('aria-hidden'), 'true', 'tree-toggle: aria-hidden true');
   ok(!treeToggle1.attr('tabIndex'), 'tree-group: carries no tabIndex');
 

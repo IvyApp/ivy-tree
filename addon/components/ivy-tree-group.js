@@ -25,8 +25,8 @@ export default Ember.Component.extend({
   },
 
   'aria-hidden': Ember.computed(function() {
-    return (!this.get("treeItemContainer.isExpanded")) + ''; // coerce to 'true' or 'false'
-  }).property("treeItemContainer.isExpanded"),
+    return (!this.get('treeItemContainer.isExpanded')) + ''; // coerce to 'true' or 'false'
+  }).property('treeItemContainer.isExpanded'),
 
   role: 'group',
 

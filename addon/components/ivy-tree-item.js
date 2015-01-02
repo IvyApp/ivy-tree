@@ -17,12 +17,12 @@ export default Ember.Component.extend({
   tagName: 'li',
 
   'aria-expanded': Ember.computed(function() {
-    if (!this.get("isExpandable")) {
+    if (!this.get('isExpandable')) {
       return;
     }
 
-    return this.get("isExpanded") + ''; // coerce to 'true' or 'false'
-  }).property("isExpanded", "isExpandable"),
+    return this.get('isExpanded') + ''; // coerce to 'true' or 'false'
+  }).property('isExpanded', 'isExpandable'),
 
   collapsedClass: Ember.computed.alias('treeContainer.collapsedItemClass').readOnly(),
 
@@ -37,8 +37,8 @@ export default Ember.Component.extend({
    * @param {IvyTree.IvyTreeGroupComponent} treeGroup
    */
   registerTreeGroup: function(treeGroup) {
-    this.get("treeGroups").pushObject(treeGroup);
-    this.set("isExpandable", true);
+    this.get('treeGroups').pushObject(treeGroup);
+    this.set('isExpandable', true);
   },
 
   role: 'treeitem',
@@ -46,7 +46,7 @@ export default Ember.Component.extend({
   tabIndex: '-1',
 
   toggleIsExpanded: Ember.on('doubleClick', function(e) {
-    this.toggleProperty("isExpanded");
+    this.toggleProperty('isExpanded');
     e.stopPropagation();
   }),
 
@@ -66,16 +66,16 @@ export default Ember.Component.extend({
    * @param {IvyTree.IvyTreeGroupComponent} treeGroup
    */
   unregisterTreeGroup: function(treeGroup) {
-    var treeGroups = this.get("treeGroups");
+    var treeGroups = this.get('treeGroups');
 
     treeGroups.removeObject(treeGroup);
 
     if (Ember.isEmpty(treeGroups)) {
-      this.set("isExpandable", false);
+      this.set('isExpandable', false);
     }
   },
 
   _initTreeGroups: Ember.on('init', function() {
-    this.set("treeGroups", Ember.A());
+    this.set('treeGroups', Ember.A());
   })
 });

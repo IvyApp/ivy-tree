@@ -64,6 +64,7 @@
   "nomen": false,
   "onevar": false,
   "plusplus": false,
+  "quotmark": true,
   "regexp": false,
   "undef": true,
   "sub": true,
