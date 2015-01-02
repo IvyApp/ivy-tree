@@ -16,11 +16,6 @@ export default Ember.Component.extend({
   isExpandable: false,
   tagName: 'li',
 
-  init: function() {
-    this._super();
-    this._initTreeGroups();
-  },
-
   'aria-expanded': Ember.computed(function() {
     if (!this.get("isExpandable")) {
       return;
@@ -80,7 +75,7 @@ export default Ember.Component.extend({
     }
   },
 
-  _initTreeGroups: function() {
+  _initTreeGroups: Ember.on('init', function() {
     this.set("treeGroups", Ember.A());
-  }
+  })
 });
