@@ -59,7 +59,6 @@ Treeview Example][tree example]:
 
 Some things to note:
 
-* `ivy-tree-item` must be an immediate child of `ivy-tree`.
 * `ivy-tree-item-toggle` must be an immediate child of `ivy-tree-item`.
 * `ivy-tree-group` must be an immediate child of `ivy-tree-item`.
 

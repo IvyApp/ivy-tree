@@ -11,7 +11,10 @@ import Ember from 'ember';
  */
 export default Ember.Component.extend({
   attributeBindings: ['aria-expanded', 'role', 'tabIndex'],
-  classNameBindings: ['collapsedClass', 'componentClass', 'expandedClass'],
+  classNames: ['ivy-tree-item'],
+  classNameBindings: ['collapsed', 'expanded'],
+  collapsedClass: null,
+  expandedClass: null,
   isExpanded: true,
   isExpandable: false,
   tagName: 'li',
@@ -24,11 +27,17 @@ export default Ember.Component.extend({
     return this.get('isExpanded') + ''; // coerce to 'true' or 'false'
   }).property('isExpanded', 'isExpandable'),
 
-  collapsedClass: Ember.computed.alias('treeContainer.collapsedItemClass').readOnly(),
+  collapsed: Ember.computed(function() {
+    if (this.get('isExpandable') && !this.get('isExpanded')) {
+      return this.get('collapsedClass');
+    }
+  }).property('collapsedClass', 'isExpandable', 'isExpanded'),
 
-  componentClass: 'ivy-tree-item',
-
-  expandedClass: Ember.computed.alias('treeContainer.expandedItemClass').readOnly(),
+  expanded: Ember.computed(function() {
+    if (this.get('isExpandable') && this.get('isExpanded')) {
+      return this.get('expandedClass');
+    }
+  }).property('expandedClass', 'isExpandable', 'isExpanded'),
 
   /**
    * Adds a group to the `treeGroups` array.
@@ -49,15 +58,6 @@ export default Ember.Component.extend({
     this.toggleProperty('isExpanded');
     e.stopPropagation();
   }),
-
-  /**
-   * The `ivy-tree` component in which the item is defined.
-   *
-   * @property treeContainer
-   * @type IvyTree.IvyTreeComponent
-   * @readOnly
-   */
-  treeContainer: Ember.computed.alias('parentView').readOnly(),
 
   /**
    * Removes a group from the `treeGroups` array.

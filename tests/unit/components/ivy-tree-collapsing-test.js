@@ -10,14 +10,14 @@ moduleForComponent('ivy-tree', 'component:ivy-tree collapsing', {
 });
 
 var basicTemplate = Ember.Handlebars.compile(
-  '{{#ivy-tree-item id="treeItem1"}}item 1' +
+  '{{#ivy-tree-item id="treeItem1" expandedClass="expanded-class-name"}}item 1' +
     '{{#ivy-tree-item-toggle id="treeToggle1"}}toggle 1{{/ivy-tree-item-toggle}}' +
     '{{#ivy-tree-group id="treeGroup1"}}' +
       '{{#ivy-tree-item}}subitem 1.1{{/ivy-tree-item}}' +
       '{{#ivy-tree-item}}subitem 1.2{{/ivy-tree-item}}' +
     '{{/ivy-tree-group}}' +
   '{{/ivy-tree-item}}' +
-  '{{#ivy-tree-item id="treeItem2" isExpanded=false}}item 2' +
+  '{{#ivy-tree-item id="treeItem2" isExpanded=false collapsedClass="collapsed-class-name"}}item 2' +
     '{{#ivy-tree-group id="treeGroup2"}}' +
       '{{#ivy-tree-item}}subitem 1.1{{/ivy-tree-item}}' +
       '{{#ivy-tree-item}}subitem 1.2{{/ivy-tree-item}}' +
@@ -28,8 +28,7 @@ var basicTemplate = Ember.Handlebars.compile(
 
 test('sets an optional expandedItemClass class when expanded', function() {
   var component = this.subject({
-    template: basicTemplate,
-    expandedItemClass: 'expanded-class-name'
+    template: basicTemplate
   });
   this.append();
 
@@ -39,8 +38,7 @@ test('sets an optional expandedItemClass class when expanded', function() {
 
 test('sets an optional collapsedItemClass class when collapsed', function() {
   var component = this.subject({
-    template: basicTemplate,
-    collapsedItemClass: 'collapsed-class-name'
+    template: basicTemplate
   });
   this.append();
 
