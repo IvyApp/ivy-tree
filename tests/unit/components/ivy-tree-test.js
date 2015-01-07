@@ -4,14 +4,12 @@ import { moduleForComponent, test } from 'ember-qunit';
 moduleForComponent('ivy-tree', 'component:ivy-tree', {
   needs: [
     'component:ivy-tree-item',
-    'component:ivy-tree-group',
-    'component:ivy-tree-item-toggle',
+    'component:ivy-tree-group'
   ]
 });
 
 var basicTemplate = Ember.Handlebars.compile(
   '{{#ivy-tree-item id="treeItem1"}}item 1' +
-    '{{#ivy-tree-item-toggle id="treeToggle1"}}toggle 1{{/ivy-tree-item-toggle}}' +
     '{{#ivy-tree-group id="treeGroup1"}}' +
       '{{#ivy-tree-item}}subitem 1.1{{/ivy-tree-item}}' +
       '{{#ivy-tree-item}}subitem 1.2{{/ivy-tree-item}}' +
@@ -47,10 +45,6 @@ test('WAI-ARIA attributes', function() {
   equal(treeGroup1.attr('aria-hidden'), 'false', 'tree-group: aria-hidden false');
   equal(treeGroup1.attr('role'), 'group', 'tree-group: role');
   ok(!treeGroup1.attr('tabIndex'), 'tree-group: carries no tabIndex');
-
-  var treeToggle1 = component.$('#treeToggle1');
-  equal(treeToggle1.attr('aria-hidden'), 'true', 'tree-toggle: aria-hidden true');
-  ok(!treeToggle1.attr('tabIndex'), 'tree-group: carries no tabIndex');
 
   var treeItem2 = component.$('#treeItem2');
   equal(treeItem2.attr('aria-expanded'), 'false', 'tree-item: aria-expanded false');

@@ -54,8 +54,12 @@ export default Ember.Component.extend({
 
   tabIndex: '-1',
 
-  toggleIsExpanded: Ember.on('doubleClick', function(e) {
+  toggleIsExpanded: function() {
     this.toggleProperty('isExpanded');
+  },
+
+  toggleIsExpandedOnDoubleClick: Ember.on('doubleClick', function(e) {
+    this.toggleIsExpanded();
     e.stopPropagation();
   }),
 
