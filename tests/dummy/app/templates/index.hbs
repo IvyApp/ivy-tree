@@ -1,67 +1,67 @@
 <div id="application" role="application">
 
 <h2 id="foods">Foods</h2>
-{{#ivy-tree class="list-group" aria-labelledby="foods"}}
-  {{#ivy-tree-item class="list-group-item" isExpanded=false}}
+{{#ivy-tree class="list-group" aria-labelledby="foods" as |tree|}}
+  {{#tree.item class="list-group-item" as |item|}}
     <span class="badge">5</span>
     <span>Fruits</span>
-    {{#ivy-tree-group class="list-group"}}
-      {{#ivy-tree-item class="list-group-item"}}Oranges{{/ivy-tree-item}}
-      {{#ivy-tree-item class="list-group-item"}}Pineapples{{/ivy-tree-item}}
-      {{#ivy-tree-item class="list-group-item" isExpanded=false}}
+    {{#item.group class="list-group" as |group|}}
+      {{#group.item class="list-group-item"}}Oranges{{/group.item}}
+      {{#group.item class="list-group-item"}}Pineapples{{/group.item}}
+      {{#group.item class="list-group-item" as |item1|}}
         <span class="badge">3</span>
         <span>Apples</span>
-        {{#ivy-tree-group class="list-group"}}
-          {{#ivy-tree-item class="list-group-item"}}Macintosh{{/ivy-tree-item}}
-          {{#ivy-tree-item class="list-group-item" isExpanded=false}}
+        {{#item1.group class="list-group" as |group1|}}
+          {{#group1.item class="list-group-item"}}Macintosh{{/group1.item}}
+          {{#group1.item class="list-group-item" as |item2|}}
             <span class="badge">3</span>
             <span>Granny Smith</span>
-            {{#ivy-tree-group class="list-group"}}
-              {{#ivy-tree-item class="list-group-item"}}Washington State{{/ivy-tree-item}}
-              {{#ivy-tree-item class="list-group-item"}}Michigan{{/ivy-tree-item}}
-              {{#ivy-tree-item class="list-group-item"}}New York{{/ivy-tree-item}}
-            {{/ivy-tree-group}}
-          {{/ivy-tree-item}}
-          {{#ivy-tree-item class="list-group-item"}}Fuji{{/ivy-tree-item}}
-        {{/ivy-tree-group}}
-      {{/ivy-tree-item}}
-      {{#ivy-tree-item class="list-group-item"}}Bananas{{/ivy-tree-item}}
-      {{#ivy-tree-item class="list-group-item"}}Pears{{/ivy-tree-item}}
-    {{/ivy-tree-group}}
-  {{/ivy-tree-item}}
-  {{#ivy-tree-item class="list-group-item" isExpanded=false}}
+            {{#item2.group class="list-group" as |group2|}}
+              {{#group2.item class="list-group-item"}}Washington State{{/group2.item}}
+              {{#group2.item class="list-group-item"}}Michigan{{/group2.item}}
+              {{#group2.item class="list-group-item"}}New York{{/group2.item}}
+            {{/item2.group}}
+          {{/group1.item}}
+          {{#group1.item class="list-group-item"}}Fuji{{/group1.item}}
+        {{/item1.group}}
+      {{/group.item}}
+      {{#group.item class="list-group-item"}}Bananas{{/group.item}}
+      {{#group.item class="list-group-item"}}Pears{{/group.item}}
+    {{/item.group}}
+  {{/tree.item}}
+  {{#tree.item class="list-group-item" as |item|}}
     <span class="badge">5</span>
     <span>Vegetables</span>
-    {{#ivy-tree-group class="list-group"}}
-      {{#ivy-tree-item class="list-group-item"}}Broccoli{{/ivy-tree-item}}
-      {{#ivy-tree-item class="list-group-item"}}Carrots{{/ivy-tree-item}}
-      {{#ivy-tree-item class="list-group-item" isExpanded=false}}
+    {{#item.group class="list-group" as |group|}}
+      {{#group.item class="list-group-item"}}Broccoli{{/group.item}}
+      {{#group.item class="list-group-item"}}Carrots{{/group.item}}
+      {{#group.item class="list-group-item" as |item1|}}
         <span class="badge">3</span>
         <span>Lettuce</span>
-        {{#ivy-tree-group class="list-group"}}
-          {{#ivy-tree-item class="list-group-item"}}Romaine{{/ivy-tree-item}}
-          {{#ivy-tree-item class="list-group-item"}}Iceberg{{/ivy-tree-item}}
-          {{#ivy-tree-item class="list-group-item"}}Butterhead{{/ivy-tree-item}}
-        {{/ivy-tree-group}}
-      {{/ivy-tree-item}}
-      {{#ivy-tree-item class="list-group-item"}}Spinach{{/ivy-tree-item}}
-      {{#ivy-tree-item class="list-group-item" isExpanded=false}}
+        {{#item1.group class="list-group" as |group1|}}
+          {{#group1.item class="list-group-item"}}Romaine{{/group1.item}}
+          {{#group1.item class="list-group-item"}}Iceberg{{/group1.item}}
+          {{#group1.item class="list-group-item"}}Butterhead{{/group1.item}}
+        {{/item1.group}}
+      {{/group.item}}
+      {{#group.item class="list-group-item"}}Spinach{{/group.item}}
+      {{#group.item class="list-group-item" as |item1|}}
         <span class="badge">9</span>
         <span>Squash</span>
-        {{#ivy-tree-group class="list-group"}}
-          {{#ivy-tree-item class="list-group-item"}}Acorn{{/ivy-tree-item}}
-          {{#ivy-tree-item class="list-group-item"}}Ambercup{{/ivy-tree-item}}
-          {{#ivy-tree-item class="list-group-item"}}Autumn Cup{{/ivy-tree-item}}
-          {{#ivy-tree-item class="list-group-item"}}Hubbard{{/ivy-tree-item}}
-          {{#ivy-tree-item class="list-group-item"}}Kabocha{{/ivy-tree-item}}
-          {{#ivy-tree-item class="list-group-item"}}Butternut{{/ivy-tree-item}}
-          {{#ivy-tree-item class="list-group-item"}}Spaghetti{{/ivy-tree-item}}
-          {{#ivy-tree-item class="list-group-item"}}Sweet Dumpling{{/ivy-tree-item}}
-          {{#ivy-tree-item class="list-group-item"}}Turban{{/ivy-tree-item}}
-        {{/ivy-tree-group}}
-      {{/ivy-tree-item}}
-    {{/ivy-tree-group}}
-  {{/ivy-tree-item}}
+        {{#item1.group class="list-group" as |group1|}}
+          {{#group1.item class="list-group-item"}}Acorn{{/group1.item}}
+          {{#group1.item class="list-group-item"}}Ambercup{{/group1.item}}
+          {{#group1.item class="list-group-item"}}Autumn Cup{{/group1.item}}
+          {{#group1.item class="list-group-item"}}Hubbard{{/group1.item}}
+          {{#group1.item class="list-group-item"}}Kabocha{{/group1.item}}
+          {{#group1.item class="list-group-item"}}Butternut{{/group1.item}}
+          {{#group1.item class="list-group-item"}}Spaghetti{{/group1.item}}
+          {{#group1.item class="list-group-item"}}Sweet Dumpling{{/group1.item}}
+          {{#group1.item class="list-group-item"}}Turban{{/group1.item}}
+        {{/item1.group}}
+      {{/group.item}}
+    {{/item.group}}
+  {{/tree.item}}
 {{/ivy-tree}}
 
 </div>

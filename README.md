@@ -17,38 +17,38 @@ The following example is adapted from the [OpenAjax Alliance Accessibility
 Treeview Example][tree example]:
 
 ```handlebars
-{{#ivy-tree}}
-  {{#ivy-tree-item}}
+{{#ivy-tree as |tree|}}
+  {{#tree.item as |fruits|}}
     <span>Fruits</span>
-    {{#ivy-tree-group}}
-      {{#ivy-tree-item}}Oranges{{/ivy-tree-item}}
-      {{#ivy-tree-item}}Pineapples{{/ivy-tree-item}}
-      {{#ivy-tree-item}}
+    {{#fruits.group as |fruitsGroup|}}
+      {{#fruitsGroup.item}}Oranges{{/fruitsGroup.item}}
+      {{#fruitsGroup.item}}Pineapples{{/fruitsGroup.item}}
+      {{#fruitsGroup.item as |apples|}}
         <span>Apples</span>
-        {{#ivy-tree-group}}
-          {{#ivy-tree-item}}Macintosh{{/ivy-tree-item}}
-          {{#ivy-tree-item}}
+        {{#apples.group as |applesGroup|}}
+          {{#applesGroup.item}}Macintosh{{/applesGroup.item}}
+          {{#applesGroup.item as |granny|}}
             <span>Granny Smith</span>
-            {{#ivy-tree-group}}
-              {{#ivy-tree-item}}Washington State{{/ivy-tree-item}}
-              {{#ivy-tree-item}}Michigan{{/ivy-tree-item}}
-              {{#ivy-tree-item}}New York{{/ivy-tree-item}}
-            {{/ivy-tree-group}}
-          {{/ivy-tree-item}}
-          {{#ivy-tree-item}}Fuji{{/ivy-tree-item}}
-        {{/ivy-tree-group}}
-      {{/ivy-tree-item}}
-      {{#ivy-tree-item}}Bananas{{/ivy-tree-item}}
-      {{#ivy-tree-item}}Pears{{/ivy-tree-item}}
-    {{/ivy-tree-group}}
-  {{/ivy-tree-item}}
-  {{#ivy-tree-item}}
+            {{#granny.group as |grannyGroup|}}
+              {{#grannyGroup.item}}Washington State{{/grannyGroup.item}}
+              {{#grannyGroup.item}}Michigan{{/grannyGroup.item}}
+              {{#grannyGroup.item}}New York{{/grannyGroup.item}}
+            {{/granny.group}}
+          {{/applesGroup.item}}
+          {{#applesGroup.item}}Fuji{{/applesGroup.item}}
+        {{/apples.group}}
+      {{/fruitsGroup.item}}
+      {{#fruitsGroup.item}}Bananas{{/fruitsGroup.item}}
+      {{#fruitsGroup.item}}Pears{{/fruitsGroup.item}}
+    {{/fruits.group}}
+  {{/tree.item}}
+  {{#tree.item as |veggies|}}
     <span>Vegetables</span>
-    {{#ivy-tree-group}}
-      {{#ivy-tree-item}}Broccoli{{/ivy-tree-item}}
-      {{#ivy-tree-item}}Carrots{{/ivy-tree-item}}
-    {{/ivy-tree-group}}
-  {{/ivy-tree-item}}
+    {{#veggies.group as |veggiesGroup|}}
+      {{#veggiesGroup.item}}Broccoli{{/veggiesGroup.item}}
+      {{#veggiesGroup.item}}Carrots{{/veggiesGroup.item}}
+    {{/veggies.group}}
+  {{/tree.item}}
 {{/ivy-tree}}
 ```
 

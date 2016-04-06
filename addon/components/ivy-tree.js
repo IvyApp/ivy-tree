@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import IvyTreeGroupComponent from 'ivy-tree/components/ivy-tree-group';
 
 /**
  * @module ivy-tree
@@ -7,13 +7,10 @@ import Ember from 'ember';
 /**
  * @class IvyTreeComponent
  * @namespace IvyTree
- * @extends Ember.Component
+ * @extends IvyTreeGroupComponent
  */
-export default Ember.Component.extend({
-  attributeBindings: ['aria-labelledby', 'role'],
+export default IvyTreeGroupComponent.extend({
+  attributeBindings: ['aria-labelledby'],
   classNames: ['ivy-tree'],
-  tagName: 'ul',
-
-  'aria-labelledby': null,
   role: 'tree'
 });

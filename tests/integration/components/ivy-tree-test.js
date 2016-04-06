@@ -6,24 +6,26 @@ moduleForComponent('ivy-tree', 'Integration | Component | ivy tree', {
   integration: true
 });
 
+const template = hbs`
+  {{#ivy-tree aria-labelledby="test_label" as |tree|}}
+    {{#tree.item id="treeItem1" expandedClass="expanded-class-name" as |item|}}item 1
+      {{#item.group id="treeGroup1" as |group|}}
+        {{#group.item}}subitem 1.1{{/group.item}}
+        {{#group.item}}subitem 1.2{{/group.item}}
+      {{/item.group}}
+    {{/tree.item}}
+    {{#tree.item id="treeItem2" isExpanded=false collapsedClass="collapsed-class-name" as |item|}}item 2
+      {{#item.group id="treeGroup2" as |group|}}
+        {{#group.item}}subitem 1.1{{/group.item}}
+        {{#group.item}}subitem 1.2{{/group.item}}
+      {{/item.group}}
+    {{/tree.item}}
+    {{#tree.item id="treeItem3"}}item 3{{/tree.item}}
+  {{/ivy-tree}}
+`;
+
 test('WAI-ARIA attributes', function(assert) {
-  this.render(hbs`
-    {{#ivy-tree aria-labelledby="test_label"}}
-      {{#ivy-tree-item id="treeItem1" expandedClass="expanded-class-name"}}item 1
-      {{#ivy-tree-group id="treeGroup1"}}
-        {{#ivy-tree-item}}subitem 1.1{{/ivy-tree-item}}
-        {{#ivy-tree-item}}subitem 1.2{{/ivy-tree-item}}
-      {{/ivy-tree-group}}
-      {{/ivy-tree-item}}
-      {{#ivy-tree-item id="treeItem2" isExpanded=false collapsedClass="collapsed-class-name"}}item 2
-        {{#ivy-tree-group id="treeGroup2"}}
-          {{#ivy-tree-item}}subitem 1.1{{/ivy-tree-item}}
-          {{#ivy-tree-item}}subitem 1.2{{/ivy-tree-item}}
-        {{/ivy-tree-group}}
-      {{/ivy-tree-item}}
-      {{#ivy-tree-item id="treeItem3"}}item 3{{/ivy-tree-item}}
-    {{/ivy-tree}}
-  `);
+  this.render(template);
 
   const tree = this.$('.ivy-tree');
   assert.equal(tree.attr('aria-labelledby'), 'test_label', 'tree: aria-labelledby');
@@ -50,67 +52,18 @@ test('WAI-ARIA attributes', function(assert) {
 });
 
 test('sets an optional expandedItemClass class when expanded', function(assert) {
-  this.render(hbs`
-    {{#ivy-tree}}
-      {{#ivy-tree-item id="treeItem1" expandedClass="expanded-class-name"}}item 1
-      {{#ivy-tree-group id="treeGroup1"}}
-        {{#ivy-tree-item}}subitem 1.1{{/ivy-tree-item}}
-        {{#ivy-tree-item}}subitem 1.2{{/ivy-tree-item}}
-      {{/ivy-tree-group}}
-      {{/ivy-tree-item}}
-      {{#ivy-tree-item id="treeItem2" isExpanded=false collapsedClass="collapsed-class-name"}}item 2
-        {{#ivy-tree-group id="treeGroup2"}}
-          {{#ivy-tree-item}}subitem 1.1{{/ivy-tree-item}}
-          {{#ivy-tree-item}}subitem 1.2{{/ivy-tree-item}}
-        {{/ivy-tree-group}}
-      {{/ivy-tree-item}}
-      {{#ivy-tree-item id="treeItem3"}}item 3{{/ivy-tree-item}}
-    {{/ivy-tree}}
-  `);
-
+  this.render(template);
   assert.ok(this.$('#treeItem1').hasClass('expanded-class-name'), 'tree-item: expandedClass');
 });
 
 test('sets an optional collapsedItemClass class when collapsed', function(assert) {
-  this.render(hbs`
-    {{#ivy-tree}}
-      {{#ivy-tree-item id="treeItem1" expandedClass="expanded-class-name"}}item 1
-      {{#ivy-tree-group id="treeGroup1"}}
-        {{#ivy-tree-item}}subitem 1.1{{/ivy-tree-item}}
-        {{#ivy-tree-item}}subitem 1.2{{/ivy-tree-item}}
-      {{/ivy-tree-group}}
-      {{/ivy-tree-item}}
-      {{#ivy-tree-item id="treeItem2" isExpanded=false collapsedClass="collapsed-class-name"}}item 2
-        {{#ivy-tree-group id="treeGroup2"}}
-          {{#ivy-tree-item}}subitem 1.1{{/ivy-tree-item}}
-          {{#ivy-tree-item}}subitem 1.2{{/ivy-tree-item}}
-        {{/ivy-tree-group}}
-      {{/ivy-tree-item}}
-      {{#ivy-tree-item id="treeItem3"}}item 3{{/ivy-tree-item}}
-    {{/ivy-tree}}
-  `);
+  this.render(template);
 
   assert.ok(this.$('#treeItem2').hasClass('collapsed-class-name'), 'tree-item: collapsedClass');
 });
 
 test('double-click toggles the clicked parent node expansion', function(assert) {
-  this.render(hbs`
-    {{#ivy-tree}}
-      {{#ivy-tree-item id="treeItem1" expandedClass="expanded-class-name"}}item 1
-      {{#ivy-tree-group id="treeGroup1"}}
-        {{#ivy-tree-item}}subitem 1.1{{/ivy-tree-item}}
-        {{#ivy-tree-item}}subitem 1.2{{/ivy-tree-item}}
-      {{/ivy-tree-group}}
-      {{/ivy-tree-item}}
-      {{#ivy-tree-item id="treeItem2" isExpanded=false collapsedClass="collapsed-class-name"}}item 2
-        {{#ivy-tree-group id="treeGroup2"}}
-          {{#ivy-tree-item}}subitem 1.1{{/ivy-tree-item}}
-          {{#ivy-tree-item}}subitem 1.2{{/ivy-tree-item}}
-        {{/ivy-tree-group}}
-      {{/ivy-tree-item}}
-      {{#ivy-tree-item id="treeItem3"}}item 3{{/ivy-tree-item}}
-    {{/ivy-tree}}
-  `);
+  this.render(template);
 
   const treeItem1 = this.$('#treeItem1');
   const treeGroup1 = this.$('#treeGroup1');

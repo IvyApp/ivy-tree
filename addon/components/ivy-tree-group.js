@@ -1,7 +1,8 @@
 import Ember from 'ember';
+import layout from 'ivy-tree/templates/components/ivy-tree-group';
 
 /**
- * @module ivy-tree
+ * @module ivy-tree-group
  */
 
 /**
@@ -13,37 +14,55 @@ export default Ember.Component.extend({
   attributeBindings: ['aria-hidden', 'role'],
   classNames: ['ivy-tree-group'],
   tagName: 'ul',
+  layout,
 
-  init: function() {
-    this._super();
-    Ember.run.once(this, this._registerWithTreeItemContainer);
+  init() {
+    this._super(...arguments);
+    Ember.run.once(this, this._registerWithItemContainer);
   },
 
-  willDestroy: function() {
-    this._super();
-    Ember.run.once(this, this._unregisterWithTreeItemContainer);
+  willDestroy() {
+    this._super(...arguments);
+    Ember.run.once(this, this._unregisterWithItemContainer);
   },
 
-  'aria-hidden': Ember.computed(function() {
-    return (!this.get('treeItemContainer.isExpanded')) + ''; // coerce to 'true' or 'false'
-  }).property('treeItemContainer.isExpanded'),
+  'aria-hidden': Ember.computed('itemContainer.isExpanded', function() {
+    const itemContainer = this.get('itemContainer');
+
+    if (itemContainer) {
+      return (!this.get('itemContainer.isExpanded')) + '';
+    } else {
+      return 'false';
+    }
+  }),
 
   role: 'group',
 
-  /**
-   * The `ivy-tree-item` component in which the group is defined.
-   *
-   * @property treeItemContainer
-   * @type IvyTree.IvyTreeItemComponent
-   * @readOnly
-   */
-  treeItemContainer: Ember.computed.alias('parentView').readOnly(),
+  _registerWithItemContainer: function() {
+    const itemContainer = this.get('itemContainer');
 
-  _registerWithTreeItemContainer: function() {
-    this.get('treeItemContainer').registerTreeGroup(this);
+    if (itemContainer) {
+      itemContainer.registerGroup(this);
+    }
   },
 
-  _unregisterWithTreeItemContainer: function() {
-    this.get('treeItemContainer').unregisterTreeGroup(this);
+  _unregisterWithItemContainer: function() {
+    const itemContainer = this.get('itemContainer');
+
+    if (itemContainer) {
+      itemContainer.unregisterGroup(this);
+    }
+  },
+
+  items: Ember.computed(function() {
+    return Ember.A();
+  }).readOnly(),
+
+  registerItem(item) {
+    this.get('items').pushObject(item);
+  },
+
+  unregisterItem(item) {
+    this.get('items').removeObject(item);
   }
 });
