@@ -19,3 +19,8 @@ ul[aria-hidden=true] {
 li[aria-expanded=true] > .badge {
   display: none;
 }
+
+[aria-expanded="true"] > .caret {
+  border-bottom: 4px dashed;
+  border-top: 0 none;
+}
