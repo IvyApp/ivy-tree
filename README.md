@@ -84,8 +84,10 @@ Then visit your app at [http://localhost:4200](http://localhost:4200).
 ### Running Tests
 
 ```sh
-ember test
+ember test    # or
+npm test      # (Runs `ember try:testall` to test your addon against multiple Ember versions)
 ```
+
 
 Or, to start a test server:
 
@@ -100,7 +102,7 @@ ember build
 ```
 
 For more information on using ember-cli, visit
-[http://www.ember-cli.com/](http://www.ember-cli.com/).
+[http://ember-cli.com/](http://ember-cli.com/).
 
 [Ember.js Components]: http://emberjs.com/guides/components/
 [WAI-ARIA tree]: http://www.w3.org/TR/wai-aria/roles#tree
