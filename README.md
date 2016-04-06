@@ -7,12 +7,8 @@ interface.
 
 ## Installation
 
-### As as Ember CLI addon
-
-Use this addon in your ember-cli application:
-
 ```sh
-npm install --save-dev IvyApp/ivy-tree
+$ ember install ivy-tree
 ```
 
 ## Usage
@@ -71,6 +67,7 @@ change is tested or it won't be merged.
 git clone git@github.com:IvyApp/ivy-tree.git
 cd ivy-tree
 npm install
+bower install
 ```
 
 ### Running
