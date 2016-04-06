@@ -1,0 +1,1 @@
+body,html{margin:20px}.list-group-item{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:default;background-color:rgba(0,150,0,.1)}.list-group{max-width:400px}li[aria-expanded=true]>.badge,ul[aria-hidden=true]{display:none}
