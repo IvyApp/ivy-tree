@@ -20,6 +20,20 @@ export default Ember.Component.extend({
   layout,
   tagName: 'li',
 
+  actions: {
+    close() {
+      this.set('isExpanded', false);
+    },
+
+    open() {
+      this.set('isExpanded', true);
+    },
+
+    toggle() {
+      this.toggleProperty('isExpanded');
+    }
+  },
+
   'aria-expanded': Ember.computed('hasGroup', 'isExpanded', function() {
     if (this.get('hasGroup')) {
       return this.get('isExpanded') + '';
@@ -48,12 +62,8 @@ export default Ember.Component.extend({
 
   tabindex: -1,
 
-  toggleIsExpanded: function() {
-    this.toggleProperty('isExpanded');
-  },
-
   toggleIsExpandedOnDoubleClick: Ember.on('doubleClick', function(e) {
-    this.toggleIsExpanded();
+    this.toggleProperty('isExpanded');
     e.stopPropagation();
   }),
 

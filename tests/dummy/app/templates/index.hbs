@@ -10,6 +10,7 @@
       {{#group.item class="list-group-item"}}Pineapples{{/group.item}}
       {{#group.item class="list-group-item" as |item1|}}
         <span class="badge">3</span>
+        <span class="caret" onclick={{action item1.toggle}}></span>
         <span>Apples</span>
         {{#item1.group class="list-group" as |group1|}}
           {{#group1.item class="list-group-item"}}Macintosh{{/group1.item}}

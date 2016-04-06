@@ -85,3 +85,96 @@ test('double-click toggles the clicked parent node expansion', function(assert) 
   assert.equal(treeItem1.attr('aria-expanded'), 'true', 'tree-item: aria-expanded true');
   assert.equal(treeGroup1.attr('aria-hidden'), 'false', 'tree-group: aria-hidden false');
 });
+
+test('items yield a toggle action', function(assert) {
+  this.render(hbs`
+    {{#ivy-tree as |tree|}}
+      {{#tree.item id="treeItem1" as |item|}}
+        item 1
+        <button onclick={{action item.toggle}}>Toggle</button>
+        {{#item.group as |group|}}
+          {{#group.item}}subitem 1.1{{/group.item}}
+        {{/item.group}}
+      {{/tree.item}}
+    {{/ivy-tree}}
+  `);
+
+  const button = this.$('button');
+  const item = this.$('#treeItem1');
+
+  assert.equal(item.attr('aria-expanded'), 'true', 'tree-item: aria-expanded');
+
+  run(function() {
+    button.click();
+  });
+
+  assert.equal(item.attr('aria-expanded'), 'false', 'tree-item: aria-expanded');
+
+  run(function() {
+    button.click();
+  });
+
+  assert.equal(item.attr('aria-expanded'), 'true', 'tree-item: aria-expanded');
+});
+
+test('items yield an open action', function(assert) {
+  this.render(hbs`
+    {{#ivy-tree as |tree|}}
+      {{#tree.item id="treeItem1" isExpanded=false as |item|}}
+        item 1
+        <button onclick={{action item.open}}>Toggle</button>
+        {{#item.group as |group|}}
+          {{#group.item}}subitem 1.1{{/group.item}}
+        {{/item.group}}
+      {{/tree.item}}
+    {{/ivy-tree}}
+  `);
+
+  const button = this.$('button');
+  const item = this.$('#treeItem1');
+
+  assert.equal(item.attr('aria-expanded'), 'false', 'tree-item: aria-expanded');
+
+  run(function() {
+    button.click();
+  });
+
+  assert.equal(item.attr('aria-expanded'), 'true', 'tree-item: aria-expanded');
+
+  run(function() {
+    button.click();
+  });
+
+  assert.equal(item.attr('aria-expanded'), 'true', 'tree-item: aria-expanded');
+});
+
+test('items yield a close action', function(assert) {
+  this.render(hbs`
+    {{#ivy-tree as |tree|}}
+      {{#tree.item id="treeItem1" isExpanded=true as |item|}}
+        item 1
+        <button onclick={{action item.close}}>Toggle</button>
+        {{#item.group as |group|}}
+          {{#group.item}}subitem 1.1{{/group.item}}
+        {{/item.group}}
+      {{/tree.item}}
+    {{/ivy-tree}}
+  `);
+
+  const button = this.$('button');
+  const item = this.$('#treeItem1');
+
+  assert.equal(item.attr('aria-expanded'), 'true', 'tree-item: aria-expanded');
+
+  run(function() {
+    button.click();
+  });
+
+  assert.equal(item.attr('aria-expanded'), 'false', 'tree-item: aria-expanded');
+
+  run(function() {
+    button.click();
+  });
+
+  assert.equal(item.attr('aria-expanded'), 'false', 'tree-item: aria-expanded');
+});
