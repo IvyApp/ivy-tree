@@ -29,6 +29,7 @@ test('WAI-ARIA attributes', function(assert) {
 
   const tree = this.$('.ivy-tree');
   assert.equal(tree.attr('aria-labelledby'), 'test_label', 'tree: aria-labelledby');
+  assert.equal(tree.attr('aria-multiselectable'), 'false', 'tree: aria-multiselectable');
   assert.equal(tree.attr('role'), 'tree', 'tree: role');
 
   const treeItem1 = this.$('#treeItem1');
