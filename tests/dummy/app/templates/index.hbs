@@ -2,20 +2,17 @@
 
 <h2 id="foods">Foods</h2>
 {{#ivy-tree class="list-group" aria-labelledby="foods" as |tree|}}
-  {{#tree.item class="list-group-item" as |item|}}
-    <span class="badge">5</span>
+  {{#tree.item class="list-group-item" aria-label="Fruits" as |item|}}
     <span>Fruits</span>
     {{#item.group class="list-group" as |group|}}
       {{#group.item class="list-group-item"}}Oranges{{/group.item}}
       {{#group.item class="list-group-item"}}Pineapples{{/group.item}}
-      {{#group.item class="list-group-item" as |item1|}}
-        <span class="badge">3</span>
-        <span class="caret" onclick={{action item1.toggle}}></span>
+      {{#group.item class="list-group-item" aria-label="Apples" as |item1|}}
+        <span role="presentation" class="caret" onclick={{action item1.toggle}}></span>
         <span>Apples</span>
         {{#item1.group class="list-group" as |group1|}}
           {{#group1.item class="list-group-item"}}Macintosh{{/group1.item}}
-          {{#group1.item class="list-group-item" as |item2|}}
-            <span class="badge">3</span>
+          {{#group1.item class="list-group-item" aria-label="Granny Smith" as |item2|}}
             <span>Granny Smith</span>
             {{#item2.group class="list-group" as |group2|}}
               {{#group2.item class="list-group-item"}}Washington State{{/group2.item}}
@@ -30,14 +27,12 @@
       {{#group.item class="list-group-item"}}Pears{{/group.item}}
     {{/item.group}}
   {{/tree.item}}
-  {{#tree.item class="list-group-item" as |item|}}
-    <span class="badge">5</span>
+  {{#tree.item class="list-group-item" aria-label="Vegetables" as |item|}}
     <span>Vegetables</span>
     {{#item.group class="list-group" as |group|}}
       {{#group.item class="list-group-item"}}Broccoli{{/group.item}}
       {{#group.item class="list-group-item"}}Carrots{{/group.item}}
-      {{#group.item class="list-group-item" as |item1|}}
-        <span class="badge">3</span>
+      {{#group.item class="list-group-item" aria-label="Lettuce" as |item1|}}
         <span>Lettuce</span>
         {{#item1.group class="list-group" as |group1|}}
           {{#group1.item class="list-group-item"}}Romaine{{/group1.item}}
@@ -46,8 +41,7 @@
         {{/item1.group}}
       {{/group.item}}
       {{#group.item class="list-group-item"}}Spinach{{/group.item}}
-      {{#group.item class="list-group-item" as |item1|}}
-        <span class="badge">9</span>
+      {{#group.item class="list-group-item" aria-label="Squash" as |item1|}}
         <span>Squash</span>
         {{#item1.group class="list-group" as |group1|}}
           {{#group1.item class="list-group-item"}}Acorn{{/group1.item}}

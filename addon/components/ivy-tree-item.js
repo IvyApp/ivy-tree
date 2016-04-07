@@ -25,13 +25,17 @@ export default Ember.Component.extend({
     }
   },
 
+  'aria-controls': Ember.computed.readOnly('group.elementId'),
+
   'aria-expanded': Ember.computed('hasGroup', 'isExpanded', function() {
     if (this.get('hasGroup')) {
       return this.get('isExpanded') + '';
     }
   }),
 
-  attributeBindings: ['aria-expanded', 'role', 'tabindex'],
+  'aria-hidden': Ember.computed.readOnly('groupContainer.aria-hidden'),
+
+  attributeBindings: ['aria-controls', 'aria-expanded', 'aria-hidden', 'aria-label', 'aria-labelledby', 'role', 'tabindex'],
 
   classNameBindings: ['collapsed', 'expanded'],
 

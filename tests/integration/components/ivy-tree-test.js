@@ -10,13 +10,13 @@ const template = hbs`
   {{#ivy-tree aria-labelledby="test_label" as |tree|}}
     {{#tree.item id="treeItem1" expandedClass="expanded-class-name" as |item|}}item 1
       {{#item.group id="treeGroup1" as |group|}}
-        {{#group.item}}subitem 1.1{{/group.item}}
+        {{#group.item id="treeSubItem1"}}subitem 1.1{{/group.item}}
         {{#group.item}}subitem 1.2{{/group.item}}
       {{/item.group}}
     {{/tree.item}}
     {{#tree.item id="treeItem2" isExpanded=false collapsedClass="collapsed-class-name" as |item|}}item 2
       {{#item.group id="treeGroup2" as |group|}}
-        {{#group.item}}subitem 1.1{{/group.item}}
+        {{#group.item id="treeSubItem2"}}subitem 1.1{{/group.item}}
         {{#group.item}}subitem 1.2{{/group.item}}
       {{/item.group}}
     {{/tree.item}}
@@ -28,28 +28,42 @@ test('WAI-ARIA attributes', function(assert) {
   this.render(template);
 
   const tree = this.$('.ivy-tree');
+  assert.equal(tree.attr('aria-hidden'), 'false', 'tree: aria-hidden');
   assert.equal(tree.attr('aria-labelledby'), 'test_label', 'tree: aria-labelledby');
   assert.equal(tree.attr('aria-multiselectable'), 'false', 'tree: aria-multiselectable');
   assert.equal(tree.attr('role'), 'tree', 'tree: role');
 
   const treeItem1 = this.$('#treeItem1');
-  assert.equal(treeItem1.attr('aria-expanded'), 'true', 'tree-item: aria-expanded true');
+  assert.equal(treeItem1.attr('aria-controls'), 'treeGroup1', 'tree-item: aria-controls');
+  assert.equal(treeItem1.attr('aria-expanded'), 'true', 'tree-item: aria-expanded');
+  assert.equal(treeItem1.attr('aria-hidden'), 'false', 'tree-item: aria-hidden');
   assert.equal(treeItem1.attr('role'), 'treeitem', 'tree-item: role');
   assert.equal(treeItem1.attr('tabIndex'), '-1', 'tree-item: tabIndex');
 
   const treeGroup1 = this.$('#treeGroup1');
-  assert.equal(treeGroup1.attr('aria-hidden'), 'false', 'tree-group: aria-hidden false');
+  assert.equal(treeGroup1.attr('aria-hidden'), 'false', 'tree-group: aria-hidden');
   assert.equal(treeGroup1.attr('role'), 'group', 'tree-group: role');
   assert.ok(!treeGroup1.attr('tabIndex'), 'tree-group: carries no tabIndex');
 
+  const treeSubItem1 = this.$('#treeSubItem1');
+  assert.equal(treeSubItem1.attr('aria-hidden'), 'false', 'tree-item: aria-hidden');
+
   const treeItem2 = this.$('#treeItem2');
-  assert.equal(treeItem2.attr('aria-expanded'), 'false', 'tree-item: aria-expanded false');
+  assert.equal(treeItem2.attr('aria-controls'), 'treeGroup2', 'tree-item: aria-controls');
+  assert.equal(treeItem2.attr('aria-expanded'), 'false', 'tree-item: aria-expanded');
+  assert.equal(treeItem2.attr('aria-hidden'), 'false', 'tree-item: aria-hidden');
 
   const treeGroup2 = this.$('#treeGroup2');
-  assert.equal(treeGroup2.attr('aria-hidden'), 'true', 'tree-group: aria-hidden true');
+  assert.equal(treeGroup2.attr('aria-hidden'), 'true', 'tree-group: aria-hidden');
+  assert.equal(treeGroup2.attr('role'), 'group', 'tree-group: role');
+
+  const treeSubItem2 = this.$('#treeSubItem2');
+  assert.equal(treeSubItem2.attr('aria-hidden'), 'true', 'tree-item: aria-hidden');
 
   const treeItem3 = this.$('#treeItem3');
-  assert.ok(!treeItem3.attr('aria-expanded'), 'tree-item: aria-expanded unused');
+  assert.notOk(treeItem3.attr('aria-controls'), 'tree-item: aria-controls unused');
+  assert.notOk(treeItem3.attr('aria-expanded'), 'tree-item: aria-expanded unused');
+  assert.equal(treeItem3.attr('aria-hidden'), 'false', 'tree-item: aria-hidden');
 });
 
 test('sets an optional expandedItemClass class when expanded', function(assert) {
