@@ -11,15 +11,6 @@ import layout from 'ivy-tree/templates/components/ivy-tree-item';
  * @extends Ember.Component
  */
 export default Ember.Component.extend({
-  attributeBindings: ['aria-expanded', 'role', 'tabindex'],
-  classNames: ['ivy-tree-item'],
-  classNameBindings: ['collapsed', 'expanded'],
-  collapsedClass: null,
-  expandedClass: null,
-  isExpanded: true,
-  layout,
-  tagName: 'li',
-
   actions: {
     close() {
       this.set('isExpanded', false);
@@ -40,11 +31,19 @@ export default Ember.Component.extend({
     }
   }),
 
+  attributeBindings: ['aria-expanded', 'role', 'tabindex'],
+
+  classNameBindings: ['collapsed', 'expanded'],
+
+  classNames: ['ivy-tree-item'],
+
   collapsed: Ember.computed('collapsedClass', 'hasGroup', 'isExpanded', function() {
     if (this.get('hasGroup') && !this.get('isExpanded')) {
       return this.get('collapsedClass');
     }
   }),
+
+  collapsedClass: null,
 
   expanded: Ember.computed('expandedClass', 'hasGroup', 'isExpanded', function() {
     if (this.get('hasGroup') && this.get('isExpanded')) {
@@ -52,7 +51,20 @@ export default Ember.Component.extend({
     }
   }),
 
+  expandedClass: null,
+
   hasGroup: Ember.computed.notEmpty('group'),
+
+  init() {
+    this._super(...arguments);
+    Ember.run.once(this, this._registerWithGroupContainer);
+  },
+
+  isExpanded: true,
+
+  layout,
+
+  tagName: 'li',
 
   registerGroup: function(group) {
     this.set('group', group);
@@ -73,11 +85,6 @@ export default Ember.Component.extend({
     } else {
       throw new Error('boom. bad group.');
     }
-  },
-
-  init() {
-    this._super(...arguments);
-    Ember.run.once(this, this._registerWithGroupContainer);
   },
 
   willDestroy() {

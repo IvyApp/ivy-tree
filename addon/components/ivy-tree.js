@@ -11,7 +11,10 @@ import IvyTreeGroupComponent from 'ivy-tree/components/ivy-tree-group';
  */
 export default IvyTreeGroupComponent.extend({
   'aria-multiselectable': 'false',
+
   attributeBindings: ['aria-labelledby', 'aria-multiselectable'],
+
   classNames: ['ivy-tree'],
+
   role: 'tree'
 });
