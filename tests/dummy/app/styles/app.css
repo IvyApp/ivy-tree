@@ -1,23 +1,34 @@
-html, body {
-  margin: 20px;
+ul[role="tree"], [role="tree"] li, [role="tree"] ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
-.list-group-item {
+[role="treeitem"] > span {
+  display: block;
+  padding-left: 0px;
   user-select: none;
-  cursor: default;
-  background-color: rgba(0,150,0,0.1);
 }
 
-.list-group {
-  max-width: 400px;
+[role="treeitem"] [role="treeitem"] > span {
+  padding-left: 30px;
 }
 
-ul[aria-hidden=true] {
-  display: none;
+[role="treeitem"] [role="treeitem"] [role="treeitem"] > span {
+  padding-left: 60px;
 }
 
-li[aria-expanded=true] > .badge {
-  display: none;
+[role="treeitem"] [role="treeitem"] [role="treeitem"] [role="treeitem"] > span {
+  padding-left: 90px;
+}
+
+[role="tree"] .active > span {
+  background-color: #ccc;
+}
+
+[role="tree"]:focus .active > span {
+  background-color: #03c;
+  color: #fff;
 }
 
 [aria-expanded="true"] > .caret {

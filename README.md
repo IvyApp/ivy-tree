@@ -13,48 +13,87 @@ $ ember install ivy-tree
 
 ## Usage
 
-The following example is adapted from the [OpenAjax Alliance Accessibility
-Treeview Example][tree example]:
+Use the `ivy-tree` component to render a root node and all of its children,
+recursively. Each descendant node will be yielded to the block you provide, so
+you can tweak the markup:
 
 ```handlebars
-{{#ivy-tree as |tree|}}
-  {{#tree.item as |fruits|}}
-    <span>Fruits</span>
-    {{#fruits.group as |fruitsGroup|}}
-      {{#fruitsGroup.item}}Oranges{{/fruitsGroup.item}}
-      {{#fruitsGroup.item}}Pineapples{{/fruitsGroup.item}}
-      {{#fruitsGroup.item as |apples|}}
-        <span>Apples</span>
-        {{#apples.group as |applesGroup|}}
-          {{#applesGroup.item}}Macintosh{{/applesGroup.item}}
-          {{#applesGroup.item as |granny|}}
-            <span>Granny Smith</span>
-            {{#granny.group as |grannyGroup|}}
-              {{#grannyGroup.item}}Washington State{{/grannyGroup.item}}
-              {{#grannyGroup.item}}Michigan{{/grannyGroup.item}}
-              {{#grannyGroup.item}}New York{{/grannyGroup.item}}
-            {{/granny.group}}
-          {{/applesGroup.item}}
-          {{#applesGroup.item}}Fuji{{/applesGroup.item}}
-        {{/apples.group}}
-      {{/fruitsGroup.item}}
-      {{#fruitsGroup.item}}Bananas{{/fruitsGroup.item}}
-      {{#fruitsGroup.item}}Pears{{/fruitsGroup.item}}
-    {{/fruits.group}}
-  {{/tree.item}}
-  {{#tree.item as |veggies|}}
-    <span>Vegetables</span>
-    {{#veggies.group as |veggiesGroup|}}
-      {{#veggiesGroup.item}}Broccoli{{/veggiesGroup.item}}
-      {{#veggiesGroup.item}}Carrots{{/veggiesGroup.item}}
-    {{/veggies.group}}
-  {{/tree.item}}
+{{#ivy-tree node=myNode as |nodeOrDescendant|}}
+  {{nodeOrDescendant.name}}
 {{/ivy-tree}}
 ```
 
-Some things to note:
+The object assigned to the `node` property is expected to have a `children`
+property which is set to an array of child nodes, if any. For example, you could
+define a tree in your route's `model` hook like so:
 
-* `ivy-tree-group` must be an immediate child of `ivy-tree-item`.
+```javascript
+// app/routes/index.js
+
+import Ember from 'ember';
+
+export default Ember.Route.extend({
+  model() {
+    return {
+      name: 'Root',
+      children: [{
+        name: 'Animals'
+        children: [
+          { name: 'Birds' },
+          { name: 'Cats' },
+          { name: 'Dogs' }
+        ]
+      }, {
+        name: 'Minerals',
+        children: [
+          { name: 'Zinc' },
+          { name: 'Gold' },
+          { name: 'Silver' }
+        ]
+      }, {
+        name: 'Vegetables',
+        children: [
+          { name: 'Carrot' },
+          { name: 'Tomato' },
+          { name: 'Lettuce' }
+        ]
+      }]
+    };
+  }
+});
+```
+
+And then use `ivy-tree` in your template like so:
+
+```handlebars
+<!-- app/templates/index.hbs -->
+
+{{#ivy-tree node=model as |nodeOrDescendant|}}
+  {{nodeOrDescendant.name}}
+{{/ivy-tree}}
+```
+
+Which would output a tree that looks like this:
+
+  * Animals
+    * Birds
+    * Cats
+    * Dogs
+  * Minerals
+    * Zinc
+    * Gold
+    * Silver
+  * Vegetables
+    * Carrot
+    * Tomato
+    * Lettuce
+
+**Note that the "Root" node is not rendered.**
+
+For a (slightly) more involved example, take a look at
+[index.js](tests/dummy/app/routes/index.js) and
+[index.hbs](tests/dummy/app/templates/index.hbs) inside the example app, under
+`tests/dummy`.
 
 ## Contributing
 
@@ -103,4 +142,4 @@ For more information on using ember-cli, visit
 
 [Ember.js Components]: http://emberjs.com/guides/components/
 [WAI-ARIA tree]: http://www.w3.org/TR/wai-aria/roles#tree
-[tree example]: http://oaa-accessibility.org/examplep/treeview1/
+[tree example]: http://cookiecrook.com/test/aria/tree/ariatree2.html
