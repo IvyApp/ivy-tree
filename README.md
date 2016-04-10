@@ -95,6 +95,22 @@ For a (slightly) more involved example, take a look at
 [index.hbs](tests/dummy/app/templates/index.hbs) inside the example app, under
 `tests/dummy`.
 
+### Keyboard Shortcuts
+
+The following keyboard shortcuts are supported:
+
+  * `Up`: Select the previous visible tree item.
+  * `Down`: Select the next visible tree item.
+  * `Left`: Collapse the selected node, if it has children and is expanded.
+    Otherwise, select its parent node.
+  * `Right`: Expand the selected node, if it has children and is collapsed.
+    Select its first child node.
+  * `Enter`: Toggle the expanded or collapsed state of the selected node.
+  * `*`: Expand all parent nodes in the tree.
+
+In addition, clicking a node will select it, and double-clicking a parent node
+will toggle its expanded or collapsed state.
+
 ## Contributing
 
 Fork this repo, make a new branch, and send a pull request. Make sure your

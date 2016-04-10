@@ -1,3 +1,28 @@
-{{#ivy-tree node=model as |nodeOrDescendant|}}
-  <span>{{nodeOrDescendant.name}}</span>
-{{/ivy-tree}}
+<div class="row">
+  <div class="col-sm-6">
+    {{#ivy-tree node=model as |nodeOrDescendant|}}
+      <span>{{nodeOrDescendant.name}}</span>
+    {{/ivy-tree}}
+  </div>
+
+  <div class="col-sm-6">
+    <h3>Keyboard Shortcuts</h3>
+
+    <p>The following keyboard shortcuts are supported. Make sure the tree has focus first.</p>
+
+    <dl class="dl-horizontal">
+      <dt><code>Up</code></dt>
+      <dd>Select the previous visible tree item.</dd>
+      <dt><code>Down</code></dt>
+      <dd>Select the next visible tree item.</dd>
+      <dt><code>Left</code></dt>
+      <dd>Collapse the selected node, if it has children and is expanded. Otherwise, select its parent node.</dd>
+      <dt><code>Right</code></dt>
+      <dd>Expand the selected node, if it has children and is collapsed. Select its first child node.</dd>
+      <dt><code>Enter</code></dt>
+      <dd>Toggle the expanded or collapsed state of the selected node.</dd>
+      <dt><code>*</code></dt>
+      <dd>Expand all nodes that have children.</dd>
+    </dl>
+  </div>
+</div>
