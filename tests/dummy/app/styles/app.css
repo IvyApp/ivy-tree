@@ -21,3 +21,8 @@
 [role="tree"] .active > span {
   background-color: #ccc;
 }
+
+[role="treeitem"][aria-expanded="true"] > span > .caret {
+  border-top: 0;
+  border-bottom: 4px dashed;
+}
