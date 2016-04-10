@@ -105,6 +105,8 @@ The following keyboard shortcuts are supported:
     Otherwise, select its parent node.
   * `Right`: Expand the selected node, if it has children and is collapsed.
     Select its first child node.
+  * `Home`: Select the first visible tree item.
+  * `End`: Select the last visible tree item.
   * `Enter`: Toggle the expanded or collapsed state of the selected node.
   * `*`: Expand all parent nodes in the tree.
 
