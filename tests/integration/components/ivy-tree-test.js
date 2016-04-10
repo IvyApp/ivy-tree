@@ -227,3 +227,33 @@ test('it expands all treeitems when asterisk (shift+8) key is pressed', function
   this.$('[role="tree"]').trigger(Ember.$.Event('keydown', { keyCode: 56, shiftKey: true }));
   assert.equal(this.$('[role="treeitem"][aria-expanded="false"]').length, 0);
 });
+
+test('it selects the first, visible treeitem when home key is pressed', function(assert) {
+  this.render(hbs`{{ivy-tree node=node}}`);
+
+  this.$('[role="treeitem"][aria-level="1"]:eq(1)').click();
+
+  assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('aria-selected'), 'false');
+
+  this.$('[role="tree"]').trigger(Ember.$.Event('keydown', { keyCode: 36 }));
+
+  assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('aria-selected'), 'true');
+});
+
+test('it selects the last, visible treeitem when end key is pressed', function(assert) {
+  this.render(hbs`{{ivy-tree node=node}}`);
+
+  this.$('[role="treeitem"][aria-level="1"]:eq(1)').click();
+
+  assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(2)').attr('aria-selected'), 'false');
+
+  this.$('[role="tree"]').trigger(Ember.$.Event('keydown', { keyCode: 35 }));
+
+  assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(2)').attr('aria-selected'), 'true');
+
+  // expand the last item to make deeper items visible.
+  this.$('[role="treeitem"][aria-level="1"]:eq(2)').dblclick();
+  this.$('[role="tree"]').trigger(Ember.$.Event('keydown', { keyCode: 35 }));
+
+  assert.equal(this.$('[role="treeitem"][aria-level="2"]:eq(8)').attr('aria-selected'), 'true');
+});

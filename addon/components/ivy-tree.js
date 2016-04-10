@@ -82,6 +82,21 @@ export default Ember.Component.extend({
     }
   },
 
+  handleEndKey(event) {
+    let activeItem = this.get('items.lastObject');
+
+    while (activeItem && activeItem.get('hasChildren') && activeItem.get('isExpanded')) {
+      activeItem = activeItem.get('items.lastObject');
+    }
+
+    if (activeItem) {
+      activeItem.activate();
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+  },
+
   handleEnterKey(event) {
     const activeItem = this.get('activeItem');
 
@@ -90,6 +105,12 @@ export default Ember.Component.extend({
       event.preventDefault();
       event.stopPropagation();
     }
+  },
+
+  handleHomeKey(event) {
+    this.get('items').findBy('ariaHidden', 'false').activate();
+    event.preventDefault();
+    event.stopPropagation();
   },
 
   handleLeftArrowKey(event) {
@@ -167,6 +188,12 @@ export default Ember.Component.extend({
       switch (event.keyCode) {
         case 13:
           this.handleEnterKey(event);
+          break;
+        case 35:
+          this.handleEndKey(event);
+          break;
+        case 36:
+          this.handleHomeKey(event);
           break;
         case 37:
           this.handleLeftArrowKey(event);
