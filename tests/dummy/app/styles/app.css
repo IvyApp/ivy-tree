@@ -1,29 +1,16 @@
-ul[role="tree"], [role="tree"] li, [role="tree"] ul {
+[role="tree"], [role="group"] {
   list-style-type: none;
+}
+
+[role="tree"] {
   margin: 0;
   padding: 0;
 }
 
 [role="treeitem"] > span {
+  cursor: pointer;
   display: block;
-  padding-left: 0px;
   user-select: none;
-}
-
-[role="treeitem"] [role="treeitem"] > span {
-  padding-left: 30px;
-}
-
-[role="treeitem"] [role="treeitem"] [role="treeitem"] > span {
-  padding-left: 60px;
-}
-
-[role="treeitem"] [role="treeitem"] [role="treeitem"] [role="treeitem"] > span {
-  padding-left: 90px;
-}
-
-[role="tree"] .active > span {
-  background-color: #ccc;
 }
 
 [role="tree"]:focus .active > span {
@@ -31,7 +18,6 @@ ul[role="tree"], [role="tree"] li, [role="tree"] ul {
   color: #fff;
 }
 
-[aria-expanded="true"] > .caret {
-  border-bottom: 4px dashed;
-  border-top: 0 none;
+[role="tree"] .active > span {
+  background-color: #ccc;
 }
