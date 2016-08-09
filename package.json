@@ -1,7 +1,7 @@
 {
   "name": "ivy-tree",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "WAI-ARIA accessible trees for Ember.",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -16,7 +16,10 @@
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": "Nathaniel Bibler",
+  "contributors": [
+    "Dray Lacy"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/IvyApp/ivy-tree/issues"
