@@ -77,8 +77,8 @@ export default Component.extend({
     if (activeDescendant.get('hasChildren') && activeDescendant.get('isExpanded')) {
       activeDescendant.get('firstChild').activate();
     } else {
-      let node = activeDescendant.get('nextSibling');
-      let parent = activeDescendant.get('parent');
+      let node = null;
+      let parent = activeDescendant;
 
       while (!node && parent) {
         node = parent.get('nextSibling');
