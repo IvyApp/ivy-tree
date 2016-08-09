@@ -1,236 +1,203 @@
-import Ember from 'ember';
+import Component from 'ember-component';
 import layout from '../templates/components/ivy-tree';
+import { readOnly } from 'ember-computed';
 
-export default Ember.Component.extend({
-  layout,
+function traverse(node, callback, thisArg) {
+  let child = node.get('firstChild');
 
-  tagName: 'ul',
-  attributeBindings: ['ariaActiveDescendant:aria-activedescendant', 'tabindex'],
+  while (child) {
+    callback.call(thisArg, child);
+    traverse(child, callback, thisArg);
+    child = child.get('nextSibling');
+  }
+}
 
-  activeClass: 'active',
-
-  ariaActiveDescendant: Ember.computed.readOnly('activeItem.elementId'),
-
-  ariaRole: Ember.computed('isRootGroup', function() {
-    return this.get('isRootGroup') ? 'tree' : 'group';
-  }).readOnly(),
-
-  groups: Ember.computed(function() {
-    return Ember.A();
-  }).readOnly(),
-
-  isRootGroup: Ember.computed.none('parentGroup'),
-
-  items: Ember.computed(function() {
-    return Ember.A();
-  }).readOnly(),
-
-  rootGroup: Ember.computed('parentGroup.rootGroup', function() {
-    return this.getWithDefault('parentGroup.rootGroup', this);
-  }).readOnly(),
-
-  tabindex: Ember.computed('isRootGroup', function() {
-    if (this.get('isRootGroup')) { return 0; }
-  }).readOnly(),
-
-  activateItem(item) {
-    this.set('activeItem', item);
+export default Component.extend({
+  activate(treeitem) {
+    this.set('activeDescendant', treeitem);
   },
 
-  addGroup(group) {
-    this.get('groups').addObject(group);
-  },
+  ariaActiveDescendant: readOnly('activeDescendant.elementId'),
 
-  addItem(item) {
-    this.get('items').addObject(item);
-  },
+  ariaRole: 'tree',
+
+  attributeBindings: [
+    'ariaActiveDescendant:aria-activedescendant',
+    'tabindex'
+  ],
 
   expandAll() {
-    this.get('items').invoke('expand');
-    this.get('groups').invoke('expandAll');
-  },
-
-  handleAsteriskKey(event) {
-    this.expandAll();
-
-    event.preventDefault();
-    event.stopPropagation();
-  },
-
-  handleDownArrowKey(event) {
-    const activeItem = this.get('activeItem');
-
-    if (activeItem) {
-      if (activeItem.get('hasChildren') && activeItem.get('isExpanded')) {
-        activeItem.get('firstChild').activate();
-      } else {
-        let nextSibling = activeItem.get('nextSibling');
-        let parentItem = activeItem.get('parentItem');
-
-        while (!nextSibling && parentItem) {
-          nextSibling = parentItem.get('nextSibling');
-          parentItem = parentItem.get('parentItem');
-        }
-
-        if (nextSibling) {
-          nextSibling.activate();
-        }
-      }
-
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  },
-
-  handleEndKey(event) {
-    let activeItem = this.get('items.lastObject');
-
-    while (activeItem && activeItem.get('hasChildren') && activeItem.get('isExpanded')) {
-      activeItem = activeItem.get('items.lastObject');
-    }
-
-    if (activeItem) {
-      activeItem.activate();
-    }
-
-    event.preventDefault();
-    event.stopPropagation();
-  },
-
-  handleEnterKey(event) {
-    const activeItem = this.get('activeItem');
-
-    if (activeItem) {
-      activeItem.toggleExpanded();
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  },
-
-  handleHomeKey(event) {
-    this.get('items').findBy('ariaHidden', 'false').activate();
-    event.preventDefault();
-    event.stopPropagation();
-  },
-
-  handleLeftArrowKey(event) {
-    const activeItem = this.get('activeItem');
-
-    if (activeItem) {
-      if (activeItem.get('hasChildren') && activeItem.get('isExpanded')) {
-        activeItem.collapse();
-      } else {
-        const parentItem = activeItem.get('parentItem');
-
-        if (parentItem) {
-          parentItem.activate();
-        }
-      }
-
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  },
-
-  handleRightArrowKey(event) {
-    const activeItem = this.get('activeItem');
-
-    if (activeItem) {
-      if (activeItem.get('hasChildren')) {
-        activeItem.expand();
-
-        const firstChild = activeItem.get('firstChild');
-
-        if (firstChild) {
-          firstChild.activate();
-        }
-
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    }
-  },
-
-  handleUpArrowKey(event) {
-    const activeItem = this.get('activeItem');
-
-    if (activeItem) {
-      let previousItem = activeItem.get('previousSibling');
-
-      while (previousItem && previousItem.get('hasChildren') && previousItem.get('isExpanded')) {
-        previousItem = previousItem.get('lastChild');
-      }
-
-      if (!previousItem) {
-        previousItem = activeItem.get('parentItem');
-      }
-
-      if (previousItem) {
-        previousItem.activate();
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    }
-  },
-
-  init() {
-    this._super(...arguments);
-
-    const parentGroup = this.get('parentGroup');
-
-    if (parentGroup) {
-      parentGroup.addGroup(this);
-    }
+    traverse(this, function(node) {
+      node.expand();
+    });
   },
 
   keyDown(event) {
-    if (this.get('isRootGroup')) {
-      switch (event.keyCode) {
-        case 13:
-          this.handleEnterKey(event);
-          break;
-        case 35:
-          this.handleEndKey(event);
-          break;
-        case 36:
-          this.handleHomeKey(event);
-          break;
-        case 37:
-          this.handleLeftArrowKey(event);
-          break;
-        case 38:
-          this.handleUpArrowKey(event);
-          break;
-        case 39:
-          this.handleRightArrowKey(event);
-          break;
-        case 40:
-          this.handleDownArrowKey(event);
-          break;
-        case 56:
-          if (event.shiftKey) {
-            this.handleAsteriskKey(event);
-          }
-          break;
+    switch (event.keyCode) {
+      case 13:
+        this.toggleExpanded(event);
+        break;
+      case 35:
+        this.moveEnd(event);
+        break;
+      case 36:
+        this.moveHome(event);
+        break;
+      case 37:
+        this.moveLeft(event);
+        break;
+      case 38:
+        this.moveUp(event);
+        break;
+      case 39:
+        this.moveRight(event);
+        break;
+      case 40:
+        this.moveDown(event);
+        break;
+      case 56:
+        if (event.shiftKey) {
+          this.expandAll();
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        break;
+    }
+  },
+
+  layout,
+
+  moveDown(event) {
+    const activeDescendant = this.get('activeDescendant');
+
+    if (!activeDescendant) {
+      return;
+    }
+
+    if (activeDescendant.get('hasChildren') && activeDescendant.get('isExpanded')) {
+      activeDescendant.get('firstChild').activate();
+    } else {
+      let node = activeDescendant.get('nextSibling');
+      let parent = activeDescendant.get('parent');
+
+      while (!node && parent) {
+        node = parent.get('nextSibling');
+        parent = parent.get('parent');
+      }
+
+      if (node) {
+        node.activate();
       }
     }
+
+    event.preventDefault();
+    event.stopPropagation();
   },
 
-  removeGroup(group) {
-    this.get('groups').removeObject(group);
-  },
+  moveEnd(event) {
+    let node = this.get('lastChild');
 
-  removeItem(item) {
-    this.get('items').removeObject(item);
-  },
-
-  willDestroy() {
-    this._super(...arguments);
-
-    const parentGroup = this.get('parentGroup');
-
-    if (parentGroup) {
-      parentGroup.removeGroup(this);
+    while (node && node.get('hasChildren') && node.get('isExpanded')) {
+      node = node.get('lastChild');
     }
-  }
+
+    if (node) {
+      node.activate();
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+  },
+
+  moveHome(event) {
+    const node = this.get('firstChild');
+
+    if (!node) {
+      return;
+    }
+
+    node.activate();
+    event.preventDefault();
+    event.stopPropagation();
+  },
+
+  moveLeft(event) {
+    const activeDescendant = this.get('activeDescendant');
+
+    if (!activeDescendant) {
+      return;
+    }
+
+    if (activeDescendant.get('hasChildren') && activeDescendant.get('isExpanded')) {
+      activeDescendant.collapse();
+    } else {
+      const parent = activeDescendant.get('parent');
+
+      if (parent && parent !== this) {
+        parent.activate();
+      }
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+  },
+
+  moveRight(event) {
+    const activeDescendant = this.get('activeDescendant');
+
+    if (!activeDescendant) {
+      return;
+    }
+
+    if (activeDescendant.get('hasChildren')) {
+      activeDescendant.expand();
+
+      const node = activeDescendant.get('firstChild');
+
+      if (node) {
+        node.activate();
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  },
+
+  moveUp(event) {
+    const activeDescendant = this.get('activeDescendant');
+
+    if (!activeDescendant) {
+      return;
+    }
+
+    let node = activeDescendant.get('previousSibling');
+
+    while (node && node.get('hasChildren') && node.get('isExpanded')) {
+      node = node.get('lastChild');
+    }
+
+    if (!node) {
+      node = activeDescendant.get('parent');
+    }
+
+    if (node && node !== this) {
+      node.activate();
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  },
+
+  toggleExpanded(event) {
+    const activeDescendant = this.get('activeDescendant');
+
+    if (!activeDescendant) {
+      return;
+    }
+
+    activeDescendant.toggleExpanded();
+    event.preventDefault();
+    event.stopPropagation();
+  },
+
+  tabindex: 0
 });

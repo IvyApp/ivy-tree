@@ -1,86 +1,48 @@
-import Ember from 'ember';
+import Component from 'ember-component';
+import computed, { notEmpty } from 'ember-computed';
 import layout from '../templates/components/ivy-treeitem';
+import { appendChild, remove } from '../-private/nodes';
 
-export default Ember.Component.extend({
-  layout,
+export default Component.extend({
+  activate() {
+    this.get('tree').activate(this);
+  },
 
-  tagName: 'li',
-  attributeBindings: ['ariaExpanded:aria-expanded', 'ariaHidden:aria-hidden', 'ariaLevel:aria-level', 'ariaSelected:aria-selected'],
-  classNameBindings: ['active'],
-
-  active: Ember.computed('activeClass', 'isActive', function() {
-    return this.get('isActive') && this.get('activeClass');
+  active: computed('activeClass', 'isActive', function() {
+    return this.get('isActive') ? this.get('activeClass') : null;
   }).readOnly(),
 
   activeClass: 'active',
 
-  ariaExpanded: Ember.computed('isExpanded', function() {
+  ariaExpanded: computed('isExpanded', function() {
     return this.get('isExpanded') + '';
   }).readOnly(),
 
-  ariaHidden: Ember.computed('parentItem.isHidden', function() {
-    return !!this.get('parentItem.isHidden') + '';
+  ariaHidden: computed('parent.isExpanded', function() {
+    return !this.get('parent.isExpanded') + '';
   }).readOnly(),
 
-  ariaLevel: Ember.computed('parentItem.ariaLevel', function() {
-    return this.getWithDefault('parentItem.ariaLevel', 0) + 1;
+  ariaLevel: computed('parent.ariaLevel', function() {
+    return this.getWithDefault('parent.ariaLevel', 0) + 1;
   }).readOnly(),
 
   ariaRole: 'treeitem',
 
-  ariaSelected: Ember.computed('isActive', function() {
+  ariaSelected: computed('isActive', function() {
     return this.get('isActive') + '';
   }).readOnly(),
 
-  firstChild: Ember.computed.readOnly('items.firstObject'),
+  attributeBindings: [
+    'ariaExpanded:aria-expanded',
+    'ariaHidden:aria-hidden',
+    'ariaLevel:aria-level',
+    'ariaSelected:aria-selected'
+  ],
 
-  hasChildren: Ember.computed.notEmpty('items'),
-
-  isActive: Ember.computed('rootGroup.activeItem', function() {
-    return this.get('rootGroup.activeItem') === this;
-  }).readOnly(),
-
-  isExpanded: false,
-
-  isHidden: Ember.computed.not('isExpanded'),
-
-  items: Ember.computed(function() {
-    return Ember.A();
-  }).readOnly(),
-
-  lastChild: Ember.computed.readOnly('items.lastObject'),
-
-  nextSibling: Ember.computed('parentGroup.items.[]', function() {
-    const items = this.get('parentGroup.items');
-    const index = items.indexOf(this);
-
-    if (index < items.get('length') - 1) {
-      return items.objectAt(index + 1);
-    }
-  }).readOnly(),
-
-  previousSibling: Ember.computed('parentGroup.items.[]', function() {
-    const items = this.get('parentGroup.items');
-    const index = items.indexOf(this);
-
-    if (index > 0) {
-      return items.objectAt(index - 1);
-    }
-  }).readOnly(),
-
-  rootGroup: Ember.computed.readOnly('parentGroup.rootGroup'),
-
-  activate() {
-    this.get('rootGroup').activateItem(this);
-  },
-
-  addItem(item) {
-    this.get('items').addObject(item);
-  },
+  classNameBindings: ['active'],
 
   click(event) {
     this.activate();
-
     event.preventDefault();
     event.stopPropagation();
   },
@@ -89,9 +51,18 @@ export default Ember.Component.extend({
     this.set('isExpanded', false);
   },
 
+  didReceiveAttrs() {
+    this._super(...arguments);
+
+    const parent = this.get('parent');
+
+    if (parent) {
+      appendChild(parent, this);
+    }
+  },
+
   doubleClick(event) {
     this.toggleExpanded();
-
     event.preventDefault();
     event.stopPropagation();
   },
@@ -100,39 +71,28 @@ export default Ember.Component.extend({
     this.set('isExpanded', true);
   },
 
-  init() {
-    this._super(...arguments);
+  firstChild: null,
 
-    const parentItem = this.get('parentItem');
+  hasChildren: notEmpty('firstChild'),
 
-    if (parentItem) {
-      parentItem.addItem(this);
-    }
+  isActive: computed('tree.activeDescendant', function() {
+    return this.get('tree.activeDescendant') === this;
+  }).readOnly(),
 
-    this.get('parentGroup').addItem(this);
-  },
+  isExpanded: false,
 
-  removeItem(item) {
-    this.get('items').removeObject(item);
-  },
+  layout,
+
+  nextSibling: null,
+
+  previousSibling: null,
 
   toggleExpanded() {
-    if (this.get('isExpanded')) {
-      this.collapse();
-    } else {
-      this.expand();
-    }
+    this.toggleProperty('isExpanded');
   },
 
   willDestroy() {
     this._super(...arguments);
-
-    const parentItem = this.get('parentItem');
-
-    if (parentItem) {
-      parentItem.removeItem(this);
-    }
-
-    this.get('parentGroup').removeItem(this);
+    remove(this);
   }
 });

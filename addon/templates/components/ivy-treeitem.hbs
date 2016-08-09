@@ -1,5 +1,1 @@
-{{yield node}}
-
-{{#ivy-tree activeClass=activeClass node=node parentItem=this parentGroup=parentGroup isVisible=isExpanded as |nodeOrDescendant|}}
-  {{yield nodeOrDescendant}}
-{{/ivy-tree}}
+{{yield (hash group=(component "ivy-treegroup" isVisible=isExpanded parent=this tree=tree))}}

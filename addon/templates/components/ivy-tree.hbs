@@ -1,5 +1,1 @@
-{{#each node.children as |child|}}
-  {{#ivy-treeitem activeClass=activeClass node=child parentItem=parentItem parentGroup=this as |childOrDescendant|}}
-    {{yield childOrDescendant}}
-  {{/ivy-treeitem}}
-{{/each}}
+{{yield (hash item=(component "ivy-treeitem" parent=this tree=this))}}

@@ -7,81 +7,116 @@ moduleForComponent('ivy-tree', 'Integration | Component | ivy-tree', {
   integration: true,
 
   beforeEach() {
-    this.set('node', {
-      name: 'Root',
-      children: [{
-        name: 'Animals',
-        children: [{
-          name: 'Birds'
-        }, {
-          name: 'Cats',
-          children: [{
-            name: 'Siamese'
-          }, {
-            name: 'Tabby'
-          }]
-        }, {
-          name: 'Dogs',
-          children: [{
-            name: 'Small Breeds',
-            children: [{
-              name: 'Chihuahua'
-            }, {
-              name: 'Italian Greyhound'
-            }, {
-              name: 'Japanese Chin'
-            }]
-          }, {
-            name: 'Medium Breeds',
-            children: [{
-              name: 'Beagle'
-            }, {
-              name: 'Cocker Spaniel'
-            }, {
-              name: 'Pit Bull'
-            }]
-          }, {
-            name: 'Large Breeds',
-            children: [{
-              name: 'Afghan'
-            }, {
-              name: 'Great Dane'
-            }, {
-              name: 'Mastiff'
-            }]
-          }]
-        }]
-      }, {
-        name: 'Minerals',
-        children: [{
-          name: 'Zinc'
-        }, {
-          name: 'Gold',
-          children: [{
-            name: 'Yellow Gold'
-          }, {
-            name: 'White Gold'
-          }]
-        }, {
-          name: 'Silver'
-        }]
-      }, {
-        name: 'Vegetables',
-        children: [{
-          name: 'Carrot'
-        }, {
-          name: 'Tomato'
-        }, {
-          name: 'Lettuce'
-        }]
-      }]
-    });
+    this.render(hbs`
+      {{#ivy-tree as |tree|}}
+        {{#tree.item as |item|}}
+          Animals
+          {{#item.group as |group|}}
+            {{#group.item as |item|}}
+              Birds
+            {{/group.item}}
+            {{#group.item as |item|}}
+              Cats
+              {{#item.group as |group|}}
+                {{#group.item}}
+                  Siamese
+                {{/group.item}}
+                {{#group.item}}
+                  Tabby
+                {{/group.item}}
+              {{/item.group}}
+            {{/group.item}}
+            {{#group.item as |item|}}
+              Dogs
+              {{#item.group as |group|}}
+                {{#group.item as |item|}}
+                  Small Breeds
+                  {{#item.group as |group|}}
+                    {{#group.item}}
+                      Chihuahua
+                    {{/group.item}}
+                    {{#group.item}}
+                      Italian Greyhound
+                    {{/group.item}}
+                    {{#group.item}}
+                      Japanese Chin
+                    {{/group.item}}
+                  {{/item.group}}
+                {{/group.item}}
+                {{#group.item as |item|}}
+                  Medium Breeds
+                  {{#item.group as |group|}}
+                    {{#group.item}}
+                      Beagle
+                    {{/group.item}}
+                    {{#group.item}}
+                      Cocker Spaniel
+                    {{/group.item}}
+                    {{#group.item}}
+                      Pit Bull
+                    {{/group.item}}
+                  {{/item.group}}
+                {{/group.item}}
+                {{#group.item as |item|}}
+                  Large Breeds
+                  {{#item.group as |group|}}
+                    {{#group.item}}
+                      Afghan
+                    {{/group.item}}
+                    {{#group.item}}
+                      Great Dane
+                    {{/group.item}}
+                    {{#group.item}}
+                      Mastiff
+                    {{/group.item}}
+                  {{/item.group}}
+                {{/group.item}}
+              {{/item.group}}
+            {{/group.item}}
+          {{/item.group}}
+        {{/tree.item}}
+        {{#tree.item activeClass="is-active" as |item|}}
+          Minerals
+          {{#item.group as |group|}}
+            {{#group.item}}
+              Zinc
+            {{/group.item}}
+            {{#group.item as |item|}}
+              Gold
+              {{#item.group as |group|}}
+                {{#group.item}}
+                  Yellow Gold
+                {{/group.item}}
+                {{#group.item}}
+                  White Gold
+                {{/group.item}}
+              {{/item.group}}
+            {{/group.item}}
+            {{#group.item}}
+              Silver
+            {{/group.item}}
+          {{/item.group}}
+        {{/tree.item}}
+        {{#tree.item as |item|}}
+          Vegetables
+          {{#item.group as |group|}}
+            {{#group.item}}
+              Carrot
+            {{/group.item}}
+            {{#group.item}}
+              Tomato
+            {{/group.item}}
+            {{#group.item}}
+              Lettuce
+            {{/group.item}}
+          {{/item.group}}
+        {{/tree.item}}
+      {{/ivy-tree}}
+    `);
   }
 });
 
 test('it applies an "aria-hidden" attribute to the children of a collapsed treeitem', function(assert) {
-  this.render(hbs`{{ivy-tree node=node}}`);
-
   assert.equal(this.$('[role="treeitem"]:eq(0)').attr('aria-expanded'), 'false');
   assert.equal(this.$('[role="treeitem"]:eq(0) [role="treeitem"]:eq(0)').attr('aria-hidden'), 'true');
 
@@ -90,8 +125,6 @@ test('it applies an "aria-hidden" attribute to the children of a collapsed treei
 });
 
 test('it applies an "aria-level" attribute to treeitems', function(assert) {
-  this.render(hbs`{{ivy-tree node=node}}`);
-
   assert.equal(this.$('[role="treeitem"][aria-level="1"]').length, 3);
   assert.equal(this.$('[role="treeitem"][aria-level="2"]').length, 9);
   assert.equal(this.$('[role="treeitem"][aria-level="3"]').length, 7);
@@ -100,8 +133,6 @@ test('it applies an "aria-level" attribute to treeitems', function(assert) {
 });
 
 test('it applies an "aria-selected" attribute to the active treeitem', function(assert) {
-  this.render(hbs`{{ivy-tree node=node}}`);
-
   assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('aria-selected'), 'false');
 
   this.$('[role="treeitem"][aria-level="1"]:eq(0)').click();
@@ -109,8 +140,6 @@ test('it applies an "aria-selected" attribute to the active treeitem', function(
 });
 
 test('it activates a treeitem on click', function(assert) {
-  this.render(hbs`{{ivy-tree node=node}}`);
-
   assert.equal(this.$('[role="tree"]').attr('aria-activedescendant'), undefined);
 
   this.$('[role="treeitem"][aria-level="1"]:eq(0)').click();
@@ -118,22 +147,18 @@ test('it activates a treeitem on click', function(assert) {
 });
 
 test('it applies an "active" class to the active treeitem', function(assert) {
-  this.render(hbs`{{ivy-tree node=node}}`);
   this.$('[role="treeitem"][aria-level="1"]:eq(0)').click();
 
   assert.ok(this.$('[role="treeitem"][aria-level="1"]:eq(0)').hasClass('active'));
 });
 
 test('it applies a custom activeClass class to the active treeitem', function(assert) {
-  this.render(hbs`{{ivy-tree activeClass="is-active" node=node}}`);
-  this.$('[role="treeitem"][aria-level="1"]:eq(0)').click();
+  this.$('[role="treeitem"][aria-level="1"]:eq(1)').click();
 
-  assert.ok(this.$('[role="treeitem"][aria-level="1"]:eq(0)').hasClass('is-active'));
+  assert.ok(this.$('[role="treeitem"][aria-level="1"]:eq(1)').hasClass('is-active'));
 });
 
 test('it toggles expansion of a treeitem on double-click', function(assert) {
-  this.render(hbs`{{ivy-tree node=node}}`);
-
   assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('aria-expanded'), 'false');
 
   this.$('[role="treeitem"][aria-level="1"]:eq(0)').dblclick();
@@ -141,7 +166,6 @@ test('it toggles expansion of a treeitem on double-click', function(assert) {
 });
 
 test('it toggles expansion of the focused treeitem when enter key is pressed', function(assert) {
-  this.render(hbs`{{ivy-tree node=node}}`);
   this.$('[role="treeitem"][aria-level="1"]:eq(0)').click();
 
   assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('aria-expanded'), 'false');
@@ -151,7 +175,6 @@ test('it toggles expansion of the focused treeitem when enter key is pressed', f
 });
 
 test('it selects the previous sibling treeitem when up arrow key is pressed', function(assert) {
-  this.render(hbs`{{ivy-tree node=node}}`);
   this.$('[role="treeitem"][aria-level="1"]:eq(1)').click();
 
   this.$('[role="tree"]').trigger(Ember.$.Event('keydown', { keyCode: 38 }));
@@ -159,7 +182,6 @@ test('it selects the previous sibling treeitem when up arrow key is pressed', fu
 });
 
 test('it selects the parent treeitem when up arrow key is pressed', function(assert) {
-  this.render(hbs`{{ivy-tree node=node}}`);
   this.$('[role="treeitem"][aria-level="1"]:eq(1)').dblclick();
   this.$('[role="treeitem"][aria-level="1"] [role="treeitem"][aria-level="2"]:eq(0)').click();
 
@@ -168,7 +190,6 @@ test('it selects the parent treeitem when up arrow key is pressed', function(ass
 });
 
 test('it selects the next sibling treeitem when down arrow key is pressed', function(assert) {
-  this.render(hbs`{{ivy-tree node=node}}`);
   this.$('[role="treeitem"][aria-level="1"]:eq(0)').click();
 
   this.$('[role="tree"]').trigger(Ember.$.Event('keydown', { keyCode: 40 }));
@@ -176,7 +197,6 @@ test('it selects the next sibling treeitem when down arrow key is pressed', func
 });
 
 test('it selects the next sibling of the parent treeitem when down arrow key is pressed', function(assert) {
-  this.render(hbs`{{ivy-tree node=node}}`);
   this.$('[role="treeitem"][aria-level="1"]:eq(0)').dblclick();
   this.$('[role="treeitem"][aria-level="1"]:eq(0) [role="treeitem"][aria-level="2"]:last-child').click();
 
@@ -185,7 +205,6 @@ test('it selects the next sibling of the parent treeitem when down arrow key is 
 });
 
 test('it collapses the (expanded) currently-focused node when left arrow key is pressed', function(assert) {
-  this.render(hbs`{{ivy-tree node=node}}`);
   this.$('[role="treeitem"][aria-level="1"]:eq(0)').click();
   this.$('[role="treeitem"][aria-level="1"]:eq(0)').dblclick();
 
@@ -198,7 +217,6 @@ test('it collapses the (expanded) currently-focused node when left arrow key is 
 });
 
 test('it selects the parent of the (collapsed) currently-focused node when left arrow key is pressed', function(assert) {
-  this.render(hbs`{{ivy-tree node=node}}`);
   this.$('[role="treeitem"][aria-level="1"]:eq(0)').dblclick();
   this.$('[role="treeitem"][aria-level="1"] [role="treeitem"][aria-level="2"]:eq(0)').click();
 
@@ -209,7 +227,6 @@ test('it selects the parent of the (collapsed) currently-focused node when left 
 });
 
 test('it expands a collapsed treeitem and selects its first child when right arrow key is pressed', function(assert) {
-  this.render(hbs`{{ivy-tree node=node}}`);
   this.$('[role="treeitem"][aria-level="1"]:eq(0)').click();
 
   assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('aria-expanded'), 'false');
@@ -220,8 +237,6 @@ test('it expands a collapsed treeitem and selects its first child when right arr
 });
 
 test('it expands all treeitems when asterisk (shift+8) key is pressed', function(assert) {
-  this.render(hbs`{{ivy-tree node=node}}`);
-
   assert.notEqual(this.$('[role="treeitem"][aria-expanded="false"]').length, 0);
 
   this.$('[role="tree"]').trigger(Ember.$.Event('keydown', { keyCode: 56, shiftKey: true }));
@@ -229,8 +244,6 @@ test('it expands all treeitems when asterisk (shift+8) key is pressed', function
 });
 
 test('it selects the first, visible treeitem when home key is pressed', function(assert) {
-  this.render(hbs`{{ivy-tree node=node}}`);
-
   this.$('[role="treeitem"][aria-level="1"]:eq(1)').click();
 
   assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('aria-selected'), 'false');
@@ -241,8 +254,6 @@ test('it selects the first, visible treeitem when home key is pressed', function
 });
 
 test('it selects the last, visible treeitem when end key is pressed', function(assert) {
-  this.render(hbs`{{ivy-tree node=node}}`);
-
   this.$('[role="treeitem"][aria-level="1"]:eq(1)').click();
 
   assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(2)').attr('aria-selected'), 'false');
