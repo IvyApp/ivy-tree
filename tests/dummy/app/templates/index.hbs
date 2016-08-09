@@ -1,57 +1,56 @@
 <div class="row">
   <div class="col-sm-6">
-    {{#ivy-tree class="list-group" aria-labelledby="foods" as |tree|}}
-      {{#tree.treeitem class="list-group-item" aria-label="Fruits" as |treeitem|}}
+    {{#ivy-tree aria-labelledby="foods" as |tree|}}
+      {{#tree.treeitem aria-label="Fruits" as |treeitem|}}
         <span>Fruits</span>
-        {{#treeitem.group class="list-group" as |group|}}
-          {{#group.treeitem class="list-group-item"}}Oranges{{/group.treeitem}}
-          {{#group.treeitem class="list-group-item"}}Pineapples{{/group.treeitem}}
-          {{#group.treeitem class="list-group-item" aria-label="Apples" as |treeitem|}}
-            <span role="presentation" class="caret"></span>
+        {{#treeitem.group as |group|}}
+          {{#group.treeitem}}<span>Oranges</span>{{/group.treeitem}}
+          {{#group.treeitem}}<span>Pineapples</span>{{/group.treeitem}}
+          {{#group.treeitem aria-label="Apples" as |treeitem|}}
             <span>Apples</span>
-            {{#treeitem.group class="list-group" as |group|}}
-              {{#group.treeitem class="list-group-item"}}Macintosh{{/group.treeitem}}
-              {{#group.treeitem class="list-group-item" aria-label="Granny Smith" as |treeitem|}}
+            {{#treeitem.group as |group|}}
+              {{#group.treeitem}}Macintosh{{/group.treeitem}}
+              {{#group.treeitem aria-label="Granny Smith" as |treeitem|}}
                 <span>Granny Smith</span>
-                {{#treeitem.group class="list-group" as |group|}}
-                  {{#group.treeitem class="list-group-item"}}Washington State{{/group.treeitem}}
-                  {{#group.treeitem class="list-group-item"}}Michigan{{/group.treeitem}}
-                  {{#group.treeitem class="list-group-item"}}New York{{/group.treeitem}}
+                {{#treeitem.group as |group|}}
+                  {{#group.treeitem}}<span>Washington State</span>{{/group.treeitem}}
+                  {{#group.treeitem}}<span>Michigan</span>{{/group.treeitem}}
+                  {{#group.treeitem}}<span>New York</span>{{/group.treeitem}}
                 {{/treeitem.group}}
               {{/group.treeitem}}
-              {{#group.treeitem class="list-group-item"}}Fuji{{/group.treeitem}}
+              {{#group.treeitem}}<span>Fuji</span>{{/group.treeitem}}
             {{/treeitem.group}}
           {{/group.treeitem}}
-          {{#group.treeitem class="list-group-item"}}Bananas{{/group.treeitem}}
-          {{#group.treeitem class="list-group-item"}}Pears{{/group.treeitem}}
+          {{#group.treeitem}}<span>Bananas</span>{{/group.treeitem}}
+          {{#group.treeitem}}<span>Pears</span>{{/group.treeitem}}
         {{/treeitem.group}}
       {{/tree.treeitem}}
-      {{#tree.treeitem class="list-group-item" aria-label="Vegetables" as |treeitem|}}
+      {{#tree.treeitem aria-label="Vegetables" as |treeitem|}}
         <span>Vegetables</span>
-        {{#treeitem.group class="list-group" as |group|}}
-          {{#group.treeitem class="list-group-item"}}Broccoli{{/group.treeitem}}
-          {{#group.treeitem class="list-group-item"}}Carrots{{/group.treeitem}}
-          {{#group.treeitem class="list-group-item" aria-label="Lettuce" as |treeitem|}}
+        {{#treeitem.group as |group|}}
+          {{#group.treeitem}}<span>Broccoli</span>{{/group.treeitem}}
+          {{#group.treeitem}}<span>Carrots</span>{{/group.treeitem}}
+          {{#group.treeitem aria-label="Lettuce" as |treeitem|}}
             <span>Lettuce</span>
-            {{#treeitem.group class="list-group" as |group|}}
-              {{#group.treeitem class="list-group-item"}}Romaine{{/group.treeitem}}
-              {{#group.treeitem class="list-group-item"}}Iceberg{{/group.treeitem}}
-              {{#group.treeitem class="list-group-item"}}Butterhead{{/group.treeitem}}
+            {{#treeitem.group as |group|}}
+              {{#group.treeitem}}<span>Romaine</span>{{/group.treeitem}}
+              {{#group.treeitem}}<span>Iceberg</span>{{/group.treeitem}}
+              {{#group.treeitem}}<span>Butterhead</span>{{/group.treeitem}}
             {{/treeitem.group}}
           {{/group.treeitem}}
-          {{#group.treeitem class="list-group-item"}}Spinach{{/group.treeitem}}
-          {{#group.treeitem class="list-group-item" aria-label="Squash" as |treeitem|}}
+          {{#group.treeitem}}<span>Spinach</span>{{/group.treeitem}}
+          {{#group.treeitem aria-label="Squash" as |treeitem|}}
             <span>Squash</span>
-            {{#treeitem.group class="list-group" as |group|}}
-              {{#group.treeitem class="list-group-item"}}Acorn{{/group.treeitem}}
-              {{#group.treeitem class="list-group-item"}}Ambercup{{/group.treeitem}}
-              {{#group.treeitem class="list-group-item"}}Autumn Cup{{/group.treeitem}}
-              {{#group.treeitem class="list-group-item"}}Hubbard{{/group.treeitem}}
-              {{#group.treeitem class="list-group-item"}}Kabocha{{/group.treeitem}}
-              {{#group.treeitem class="list-group-item"}}Butternut{{/group.treeitem}}
-              {{#group.treeitem class="list-group-item"}}Spaghetti{{/group.treeitem}}
-              {{#group.treeitem class="list-group-item"}}Sweet Dumpling{{/group.treeitem}}
-              {{#group.treeitem class="list-group-item"}}Turban{{/group.treeitem}}
+            {{#treeitem.group as |group|}}
+              {{#group.treeitem}}<span>Acorn</span>{{/group.treeitem}}
+              {{#group.treeitem}}<span>Ambercup</span>{{/group.treeitem}}
+              {{#group.treeitem}}<span>Autumn Cup</span>{{/group.treeitem}}
+              {{#group.treeitem}}<span>Hubbard</span>{{/group.treeitem}}
+              {{#group.treeitem}}<span>Kabocha</span>{{/group.treeitem}}
+              {{#group.treeitem}}<span>Butternut</span>{{/group.treeitem}}
+              {{#group.treeitem}}<span>Spaghetti</span>{{/group.treeitem}}
+              {{#group.treeitem}}<span>Sweet Dumpling</span>{{/group.treeitem}}
+              {{#group.treeitem}}<span>Turban</span>{{/group.treeitem}}
             {{/treeitem.group}}
           {{/group.treeitem}}
         {{/treeitem.group}}
