@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm-6">
-    {{#ivy-tree aria-labelledby="foods" as |tree|}}
-      {{#tree.treeitem aria-label="Fruits" as |treeitem|}}
+    {{#ivy-tree as |tree|}}
+      {{#tree.treeitem as |treeitem|}}
         <span>
           <span class="caret"></span>
           Fruits
@@ -9,14 +9,14 @@
         {{#treeitem.group as |group|}}
           {{#group.treeitem}}<span>Oranges</span>{{/group.treeitem}}
           {{#group.treeitem}}<span>Pineapples</span>{{/group.treeitem}}
-          {{#group.treeitem aria-label="Apples" as |treeitem|}}
+          {{#group.treeitem as |treeitem|}}
             <span>
               <span class="caret"></span>
               Apples
             </span>
             {{#treeitem.group as |group|}}
               {{#group.treeitem}}<span>Macintosh</span>{{/group.treeitem}}
-              {{#group.treeitem aria-label="Granny Smith" as |treeitem|}}
+              {{#group.treeitem as |treeitem|}}
                 <span>
                   <span class="caret"></span>
                   Granny Smith
@@ -34,7 +34,7 @@
           {{#group.treeitem}}<span>Pears</span>{{/group.treeitem}}
         {{/treeitem.group}}
       {{/tree.treeitem}}
-      {{#tree.treeitem aria-label="Vegetables" as |treeitem|}}
+      {{#tree.treeitem as |treeitem|}}
         <span>
           <span class="caret"></span>
           Vegetables
@@ -42,7 +42,7 @@
         {{#treeitem.group as |group|}}
           {{#group.treeitem}}<span>Broccoli</span>{{/group.treeitem}}
           {{#group.treeitem}}<span>Carrots</span>{{/group.treeitem}}
-          {{#group.treeitem aria-label="Lettuce" as |treeitem|}}
+          {{#group.treeitem as |treeitem|}}
             <span>
               <span class="caret"></span>
               Lettuce
@@ -54,7 +54,7 @@
             {{/treeitem.group}}
           {{/group.treeitem}}
           {{#group.treeitem}}<span>Spinach</span>{{/group.treeitem}}
-          {{#group.treeitem aria-label="Squash" as |treeitem|}}
+          {{#group.treeitem as |treeitem|}}
             <span>
               <span class="caret"></span>
               Squash
