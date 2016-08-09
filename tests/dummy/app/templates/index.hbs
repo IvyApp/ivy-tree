@@ -1,62 +1,85 @@
-<div id="application" role="application">
+<div class="row">
+  <div class="col-sm-6">
+    {{#ivy-tree aria-labelledby="foods" as |tree|}}
+      {{#tree.treeitem aria-label="Fruits" as |treeitem|}}
+        <span>Fruits</span>
+        {{#treeitem.group as |group|}}
+          {{#group.treeitem}}<span>Oranges</span>{{/group.treeitem}}
+          {{#group.treeitem}}<span>Pineapples</span>{{/group.treeitem}}
+          {{#group.treeitem aria-label="Apples" as |treeitem|}}
+            <span>Apples</span>
+            {{#treeitem.group as |group|}}
+              {{#group.treeitem}}<span>Macintosh</span>{{/group.treeitem}}
+              {{#group.treeitem aria-label="Granny Smith" as |treeitem|}}
+                <span>Granny Smith</span>
+                {{#treeitem.group as |group|}}
+                  {{#group.treeitem}}<span>Washington State</span>{{/group.treeitem}}
+                  {{#group.treeitem}}<span>Michigan</span>{{/group.treeitem}}
+                  {{#group.treeitem}}<span>New York</span>{{/group.treeitem}}
+                {{/treeitem.group}}
+              {{/group.treeitem}}
+              {{#group.treeitem}}<span>Fuji</span>{{/group.treeitem}}
+            {{/treeitem.group}}
+          {{/group.treeitem}}
+          {{#group.treeitem}}<span>Bananas</span>{{/group.treeitem}}
+          {{#group.treeitem}}<span>Pears</span>{{/group.treeitem}}
+        {{/treeitem.group}}
+      {{/tree.treeitem}}
+      {{#tree.treeitem aria-label="Vegetables" as |treeitem|}}
+        <span>Vegetables</span>
+        {{#treeitem.group as |group|}}
+          {{#group.treeitem}}<span>Broccoli</span>{{/group.treeitem}}
+          {{#group.treeitem}}<span>Carrots</span>{{/group.treeitem}}
+          {{#group.treeitem aria-label="Lettuce" as |treeitem|}}
+            <span>Lettuce</span>
+            {{#treeitem.group as |group|}}
+              {{#group.treeitem}}<span>Romaine</span>{{/group.treeitem}}
+              {{#group.treeitem}}<span>Iceberg</span>{{/group.treeitem}}
+              {{#group.treeitem}}<span>Butterhead</span>{{/group.treeitem}}
+            {{/treeitem.group}}
+          {{/group.treeitem}}
+          {{#group.treeitem}}<span>Spinach</span>{{/group.treeitem}}
+          {{#group.treeitem aria-label="Squash" as |treeitem|}}
+            <span>Squash</span>
+            {{#treeitem.group as |group|}}
+              {{#group.treeitem}}<span>Acorn</span>{{/group.treeitem}}
+              {{#group.treeitem}}<span>Ambercup</span>{{/group.treeitem}}
+              {{#group.treeitem}}<span>Autumn Cup</span>{{/group.treeitem}}
+              {{#group.treeitem}}<span>Hubbard</span>{{/group.treeitem}}
+              {{#group.treeitem}}<span>Kabocha</span>{{/group.treeitem}}
+              {{#group.treeitem}}<span>Butternut</span>{{/group.treeitem}}
+              {{#group.treeitem}}<span>Spaghetti</span>{{/group.treeitem}}
+              {{#group.treeitem}}<span>Sweet Dumpling</span>{{/group.treeitem}}
+              {{#group.treeitem}}<span>Turban</span>{{/group.treeitem}}
+            {{/treeitem.group}}
+          {{/group.treeitem}}
+        {{/treeitem.group}}
+      {{/tree.treeitem}}
+    {{/ivy-tree}}
+  </div>
 
-<h2 id="foods">Foods</h2>
-{{#ivy-tree class="list-group" aria-labelledby="foods" as |tree|}}
-  {{#tree.item class="list-group-item" aria-label="Fruits" as |item|}}
-    <span>Fruits</span>
-    {{#item.group class="list-group" as |group|}}
-      {{#group.item class="list-group-item"}}Oranges{{/group.item}}
-      {{#group.item class="list-group-item"}}Pineapples{{/group.item}}
-      {{#group.item class="list-group-item" aria-label="Apples" as |item1|}}
-        <span role="presentation" class="caret" onclick={{action item1.toggle}}></span>
-        <span>Apples</span>
-        {{#item1.group class="list-group" as |group1|}}
-          {{#group1.item class="list-group-item"}}Macintosh{{/group1.item}}
-          {{#group1.item class="list-group-item" aria-label="Granny Smith" as |item2|}}
-            <span>Granny Smith</span>
-            {{#item2.group class="list-group" as |group2|}}
-              {{#group2.item class="list-group-item"}}Washington State{{/group2.item}}
-              {{#group2.item class="list-group-item"}}Michigan{{/group2.item}}
-              {{#group2.item class="list-group-item"}}New York{{/group2.item}}
-            {{/item2.group}}
-          {{/group1.item}}
-          {{#group1.item class="list-group-item"}}Fuji{{/group1.item}}
-        {{/item1.group}}
-      {{/group.item}}
-      {{#group.item class="list-group-item"}}Bananas{{/group.item}}
-      {{#group.item class="list-group-item"}}Pears{{/group.item}}
-    {{/item.group}}
-  {{/tree.item}}
-  {{#tree.item class="list-group-item" aria-label="Vegetables" as |item|}}
-    <span>Vegetables</span>
-    {{#item.group class="list-group" as |group|}}
-      {{#group.item class="list-group-item"}}Broccoli{{/group.item}}
-      {{#group.item class="list-group-item"}}Carrots{{/group.item}}
-      {{#group.item class="list-group-item" aria-label="Lettuce" as |item1|}}
-        <span>Lettuce</span>
-        {{#item1.group class="list-group" as |group1|}}
-          {{#group1.item class="list-group-item"}}Romaine{{/group1.item}}
-          {{#group1.item class="list-group-item"}}Iceberg{{/group1.item}}
-          {{#group1.item class="list-group-item"}}Butterhead{{/group1.item}}
-        {{/item1.group}}
-      {{/group.item}}
-      {{#group.item class="list-group-item"}}Spinach{{/group.item}}
-      {{#group.item class="list-group-item" aria-label="Squash" as |item1|}}
-        <span>Squash</span>
-        {{#item1.group class="list-group" as |group1|}}
-          {{#group1.item class="list-group-item"}}Acorn{{/group1.item}}
-          {{#group1.item class="list-group-item"}}Ambercup{{/group1.item}}
-          {{#group1.item class="list-group-item"}}Autumn Cup{{/group1.item}}
-          {{#group1.item class="list-group-item"}}Hubbard{{/group1.item}}
-          {{#group1.item class="list-group-item"}}Kabocha{{/group1.item}}
-          {{#group1.item class="list-group-item"}}Butternut{{/group1.item}}
-          {{#group1.item class="list-group-item"}}Spaghetti{{/group1.item}}
-          {{#group1.item class="list-group-item"}}Sweet Dumpling{{/group1.item}}
-          {{#group1.item class="list-group-item"}}Turban{{/group1.item}}
-        {{/item1.group}}
-      {{/group.item}}
-    {{/item.group}}
-  {{/tree.item}}
-{{/ivy-tree}}
+  <div class="col-sm-6">
+    <h3>Keyboard Shortcuts</h3>
 
+    <p>The following keyboard shortcuts are supported. Make sure the tree has focus first.</p>
+
+    <dl class="dl-horizontal">
+      <dt><code>Up</code></dt>
+      <dd>Select the previous visible tree item.</dd>
+      <dt><code>Down</code></dt>
+      <dd>Select the next visible tree item.</dd>
+      <dt><code>Left</code></dt>
+      <dd>Collapse the selected node, if it has children and is expanded. Otherwise, select its parent node.</dd>
+      <dt><code>Right</code></dt>
+      <dd>Expand the selected node, if it has children and is collapsed. Select its first child node.</dd>
+      <dt><code>Home</code></dt>
+      <dd>Select the first visible tree item.</dd>
+      <dt><code>End</code></dt>
+      <dd>Select the last visible tree item.</dd>
+      <dt><code>Enter</code></dt>
+      <dd>Toggle the expanded or collapsed state of the selected node.</dd>
+      <dt><code>*</code></dt>
+      <dd>Expand all nodes that have children.</dd>
+    </dl>
+  </div>
 </div>

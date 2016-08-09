@@ -1,195 +1,270 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import run from 'ember-runloop';
 
-moduleForComponent('ivy-tree', 'Integration | Component | ivy tree', {
-  integration: true
+import Ember from 'ember';
+
+moduleForComponent('ivy-tree', 'Integration | Component | ivy-tree', {
+  integration: true,
+
+  beforeEach() {
+    this.render(hbs`
+      {{#ivy-tree as |tree|}}
+        {{#tree.treeitem as |treeitem|}}
+          Animals
+          {{#treeitem.group as |group|}}
+            {{#group.treeitem as |treeitem|}}
+              Birds
+            {{/group.treeitem}}
+            {{#group.treeitem as |treeitem|}}
+              Cats
+              {{#treeitem.group as |group|}}
+                {{#group.treeitem}}
+                  Siamese
+                {{/group.treeitem}}
+                {{#group.treeitem}}
+                  Tabby
+                {{/group.treeitem}}
+              {{/treeitem.group}}
+            {{/group.treeitem}}
+            {{#group.treeitem as |treeitem|}}
+              Dogs
+              {{#treeitem.group as |group|}}
+                {{#group.treeitem as |treeitem|}}
+                  Small Breeds
+                  {{#treeitem.group as |group|}}
+                    {{#group.treeitem}}
+                      Chihuahua
+                    {{/group.treeitem}}
+                    {{#group.treeitem}}
+                      Italian Greyhound
+                    {{/group.treeitem}}
+                    {{#group.treeitem}}
+                      Japanese Chin
+                    {{/group.treeitem}}
+                  {{/treeitem.group}}
+                {{/group.treeitem}}
+                {{#group.treeitem as |treeitem|}}
+                  Medium Breeds
+                  {{#treeitem.group as |group|}}
+                    {{#group.treeitem}}
+                      Beagle
+                    {{/group.treeitem}}
+                    {{#group.treeitem}}
+                      Cocker Spaniel
+                    {{/group.treeitem}}
+                    {{#group.treeitem}}
+                      Pit Bull
+                    {{/group.treeitem}}
+                  {{/treeitem.group}}
+                {{/group.treeitem}}
+                {{#group.treeitem as |treeitem|}}
+                  Large Breeds
+                  {{#treeitem.group as |group|}}
+                    {{#group.treeitem}}
+                      Afghan
+                    {{/group.treeitem}}
+                    {{#group.treeitem}}
+                      Great Dane
+                    {{/group.treeitem}}
+                    {{#group.treeitem}}
+                      Mastiff
+                    {{/group.treeitem}}
+                  {{/treeitem.group}}
+                {{/group.treeitem}}
+              {{/treeitem.group}}
+            {{/group.treeitem}}
+          {{/treeitem.group}}
+        {{/tree.treeitem}}
+        {{#tree.treeitem activeClass="is-active" as |treeitem|}}
+          Minerals
+          {{#treeitem.group as |group|}}
+            {{#group.treeitem}}
+              Zinc
+            {{/group.treeitem}}
+            {{#group.treeitem as |treeitem|}}
+              Gold
+              {{#treeitem.group as |group|}}
+                {{#group.treeitem}}
+                  Yellow Gold
+                {{/group.treeitem}}
+                {{#group.treeitem}}
+                  White Gold
+                {{/group.treeitem}}
+              {{/treeitem.group}}
+            {{/group.treeitem}}
+            {{#group.treeitem}}
+              Silver
+            {{/group.treeitem}}
+          {{/treeitem.group}}
+        {{/tree.treeitem}}
+        {{#tree.treeitem as |treeitem|}}
+          Vegetables
+          {{#treeitem.group as |group|}}
+            {{#group.treeitem}}
+              Carrot
+            {{/group.treeitem}}
+            {{#group.treeitem}}
+              Tomato
+            {{/group.treeitem}}
+            {{#group.treeitem}}
+              Lettuce
+            {{/group.treeitem}}
+          {{/treeitem.group}}
+        {{/tree.treeitem}}
+      {{/ivy-tree}}
+    `);
+  }
 });
 
-const template = hbs`
-  {{#ivy-tree aria-labelledby="test_label" as |tree|}}
-    {{#tree.item id="treeItem1" expandedClass="expanded-class-name" as |item|}}item 1
-      {{#item.group id="treeGroup1" as |group|}}
-        {{#group.item id="treeSubItem1"}}subitem 1.1{{/group.item}}
-        {{#group.item}}subitem 1.2{{/group.item}}
-      {{/item.group}}
-    {{/tree.item}}
-    {{#tree.item id="treeItem2" isExpanded=false collapsedClass="collapsed-class-name" as |item|}}item 2
-      {{#item.group id="treeGroup2" as |group|}}
-        {{#group.item id="treeSubItem2"}}subitem 1.1{{/group.item}}
-        {{#group.item}}subitem 1.2{{/group.item}}
-      {{/item.group}}
-    {{/tree.item}}
-    {{#tree.item id="treeItem3"}}item 3{{/tree.item}}
-  {{/ivy-tree}}
-`;
+test('it applies an "aria-hidden" attribute to the children of a collapsed treeitem', function(assert) {
+  assert.equal(this.$('[role="treeitem"]:eq(0)').attr('aria-expanded'), 'false');
+  assert.equal(this.$('[role="treeitem"]:eq(0) [role="treeitem"]:eq(0)').attr('aria-hidden'), 'true');
 
-test('WAI-ARIA attributes', function(assert) {
-  this.render(template);
-
-  const tree = this.$('.ivy-tree');
-  assert.equal(tree.attr('aria-hidden'), 'false', 'tree: aria-hidden');
-  assert.equal(tree.attr('aria-labelledby'), 'test_label', 'tree: aria-labelledby');
-  assert.equal(tree.attr('aria-multiselectable'), 'false', 'tree: aria-multiselectable');
-  assert.equal(tree.attr('role'), 'tree', 'tree: role');
-
-  const treeItem1 = this.$('#treeItem1');
-  assert.equal(treeItem1.attr('aria-controls'), 'treeGroup1', 'tree-item: aria-controls');
-  assert.equal(treeItem1.attr('aria-expanded'), 'true', 'tree-item: aria-expanded');
-  assert.equal(treeItem1.attr('aria-hidden'), 'false', 'tree-item: aria-hidden');
-  assert.equal(treeItem1.attr('role'), 'treeitem', 'tree-item: role');
-  assert.equal(treeItem1.attr('tabIndex'), '-1', 'tree-item: tabIndex');
-
-  const treeGroup1 = this.$('#treeGroup1');
-  assert.equal(treeGroup1.attr('aria-hidden'), 'false', 'tree-group: aria-hidden');
-  assert.equal(treeGroup1.attr('role'), 'group', 'tree-group: role');
-  assert.ok(!treeGroup1.attr('tabIndex'), 'tree-group: carries no tabIndex');
-
-  const treeSubItem1 = this.$('#treeSubItem1');
-  assert.equal(treeSubItem1.attr('aria-hidden'), 'false', 'tree-item: aria-hidden');
-
-  const treeItem2 = this.$('#treeItem2');
-  assert.equal(treeItem2.attr('aria-controls'), 'treeGroup2', 'tree-item: aria-controls');
-  assert.equal(treeItem2.attr('aria-expanded'), 'false', 'tree-item: aria-expanded');
-  assert.equal(treeItem2.attr('aria-hidden'), 'false', 'tree-item: aria-hidden');
-
-  const treeGroup2 = this.$('#treeGroup2');
-  assert.equal(treeGroup2.attr('aria-hidden'), 'true', 'tree-group: aria-hidden');
-  assert.equal(treeGroup2.attr('role'), 'group', 'tree-group: role');
-
-  const treeSubItem2 = this.$('#treeSubItem2');
-  assert.equal(treeSubItem2.attr('aria-hidden'), 'true', 'tree-item: aria-hidden');
-
-  const treeItem3 = this.$('#treeItem3');
-  assert.notOk(treeItem3.attr('aria-controls'), 'tree-item: aria-controls unused');
-  assert.notOk(treeItem3.attr('aria-expanded'), 'tree-item: aria-expanded unused');
-  assert.equal(treeItem3.attr('aria-hidden'), 'false', 'tree-item: aria-hidden');
+  this.$('[role="treeitem"]:eq(0)').dblclick();
+  assert.equal(this.$('[role="treeitem"]:eq(0) [role="treeitem"]:eq(0)').attr('aria-hidden'), 'false');
 });
 
-test('sets an optional expandedItemClass class when expanded', function(assert) {
-  this.render(template);
-  assert.ok(this.$('#treeItem1').hasClass('expanded-class-name'), 'tree-item: expandedClass');
+test('it applies an "aria-level" attribute to treeitems', function(assert) {
+  assert.equal(this.$('[role="treeitem"][aria-level="1"]').length, 3);
+  assert.equal(this.$('[role="treeitem"][aria-level="2"]').length, 9);
+  assert.equal(this.$('[role="treeitem"][aria-level="3"]').length, 7);
+  assert.equal(this.$('[role="treeitem"][aria-level="4"]').length, 9);
+  assert.equal(this.$('[role="treeitem"][aria-level="5"]').length, 0);
 });
 
-test('sets an optional collapsedItemClass class when collapsed', function(assert) {
-  this.render(template);
+test('it applies an "aria-selected" attribute to the active treeitem', function(assert) {
+  assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('aria-selected'), 'false');
 
-  assert.ok(this.$('#treeItem2').hasClass('collapsed-class-name'), 'tree-item: collapsedClass');
+  this.$('[role="treeitem"][aria-level="1"]:eq(0)').click();
+  assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('aria-selected'), 'true');
 });
 
-test('double-click toggles the clicked parent node expansion', function(assert) {
-  this.render(template);
+test('it activates a treeitem on click', function(assert) {
+  assert.equal(this.$('[role="tree"]').attr('aria-activedescendant'), undefined);
 
-  const treeItem1 = this.$('#treeItem1');
-  const treeGroup1 = this.$('#treeGroup1');
-
-  assert.equal(treeItem1.attr('aria-expanded'), 'true', 'tree-item: aria-expanded true');
-  assert.equal(treeGroup1.attr('aria-hidden'), 'false', 'tree-group: aria-hidden false');
-
-  run(function() {
-    treeItem1.trigger('dblclick');
-  });
-
-  assert.equal(treeItem1.attr('aria-expanded'), 'false', 'tree-item: aria-expanded false');
-  assert.equal(treeGroup1.attr('aria-hidden'), 'true', 'tree-group: aria-hidden true');
-
-  run(function() {
-    treeItem1.trigger('dblclick');
-  });
-
-  assert.equal(treeItem1.attr('aria-expanded'), 'true', 'tree-item: aria-expanded true');
-  assert.equal(treeGroup1.attr('aria-hidden'), 'false', 'tree-group: aria-hidden false');
+  this.$('[role="treeitem"][aria-level="1"]:eq(0)').click();
+  assert.equal(this.$('[role="tree"]').attr('aria-activedescendant'), this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('id'));
 });
 
-test('items yield a toggle action', function(assert) {
-  this.render(hbs`
-    {{#ivy-tree as |tree|}}
-      {{#tree.item id="treeItem1" as |item|}}
-        item 1
-        <button onclick={{action item.toggle}}>Toggle</button>
-        {{#item.group as |group|}}
-          {{#group.item}}subitem 1.1{{/group.item}}
-        {{/item.group}}
-      {{/tree.item}}
-    {{/ivy-tree}}
-  `);
+test('it applies an "active" class to the active treeitem', function(assert) {
+  this.$('[role="treeitem"][aria-level="1"]:eq(0)').click();
 
-  const button = this.$('button');
-  const item = this.$('#treeItem1');
-
-  assert.equal(item.attr('aria-expanded'), 'true', 'tree-item: aria-expanded');
-
-  run(function() {
-    button.click();
-  });
-
-  assert.equal(item.attr('aria-expanded'), 'false', 'tree-item: aria-expanded');
-
-  run(function() {
-    button.click();
-  });
-
-  assert.equal(item.attr('aria-expanded'), 'true', 'tree-item: aria-expanded');
+  assert.ok(this.$('[role="treeitem"][aria-level="1"]:eq(0)').hasClass('active'));
 });
 
-test('items yield an open action', function(assert) {
-  this.render(hbs`
-    {{#ivy-tree as |tree|}}
-      {{#tree.item id="treeItem1" isExpanded=false as |item|}}
-        item 1
-        <button onclick={{action item.open}}>Toggle</button>
-        {{#item.group as |group|}}
-          {{#group.item}}subitem 1.1{{/group.item}}
-        {{/item.group}}
-      {{/tree.item}}
-    {{/ivy-tree}}
-  `);
+test('it applies a custom activeClass class to the active treeitem', function(assert) {
+  this.$('[role="treeitem"][aria-level="1"]:eq(1)').click();
 
-  const button = this.$('button');
-  const item = this.$('#treeItem1');
-
-  assert.equal(item.attr('aria-expanded'), 'false', 'tree-item: aria-expanded');
-
-  run(function() {
-    button.click();
-  });
-
-  assert.equal(item.attr('aria-expanded'), 'true', 'tree-item: aria-expanded');
-
-  run(function() {
-    button.click();
-  });
-
-  assert.equal(item.attr('aria-expanded'), 'true', 'tree-item: aria-expanded');
+  assert.ok(this.$('[role="treeitem"][aria-level="1"]:eq(1)').hasClass('is-active'));
 });
 
-test('items yield a close action', function(assert) {
-  this.render(hbs`
-    {{#ivy-tree as |tree|}}
-      {{#tree.item id="treeItem1" isExpanded=true as |item|}}
-        item 1
-        <button onclick={{action item.close}}>Toggle</button>
-        {{#item.group as |group|}}
-          {{#group.item}}subitem 1.1{{/group.item}}
-        {{/item.group}}
-      {{/tree.item}}
-    {{/ivy-tree}}
-  `);
+test('it toggles expansion of a treeitem on double-click', function(assert) {
+  assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('aria-expanded'), 'false');
 
-  const button = this.$('button');
-  const item = this.$('#treeItem1');
+  this.$('[role="treeitem"][aria-level="1"]:eq(0)').dblclick();
+  assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('aria-expanded'), 'true');
+});
 
-  assert.equal(item.attr('aria-expanded'), 'true', 'tree-item: aria-expanded');
+test('it toggles expansion of the focused treeitem when enter key is pressed', function(assert) {
+  this.$('[role="treeitem"][aria-level="1"]:eq(0)').click();
 
-  run(function() {
-    button.click();
-  });
+  assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('aria-expanded'), 'false');
 
-  assert.equal(item.attr('aria-expanded'), 'false', 'tree-item: aria-expanded');
+  this.$('[role="tree"]').trigger(Ember.$.Event('keydown', { keyCode: 13 }));
+  assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('aria-expanded'), 'true');
+});
 
-  run(function() {
-    button.click();
-  });
+test('it selects the previous sibling treeitem when up arrow key is pressed', function(assert) {
+  this.$('[role="treeitem"][aria-level="1"]:eq(1)').click();
 
-  assert.equal(item.attr('aria-expanded'), 'false', 'tree-item: aria-expanded');
+  this.$('[role="tree"]').trigger(Ember.$.Event('keydown', { keyCode: 38 }));
+  assert.equal(this.$('[role="tree"]').attr('aria-activedescendant'), this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('id'));
+});
+
+test('it selects the parent treeitem when up arrow key is pressed', function(assert) {
+  this.$('[role="treeitem"][aria-level="1"]:eq(1)').dblclick();
+  this.$('[role="treeitem"][aria-level="1"] [role="treeitem"][aria-level="2"]:eq(0)').click();
+
+  this.$('[role="tree"]').trigger(Ember.$.Event('keydown', { keyCode: 38 }));
+  assert.equal(this.$('[role="tree"]').attr('aria-activedescendant'), this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('id'));
+});
+
+test('it selects the next sibling treeitem when down arrow key is pressed', function(assert) {
+  this.$('[role="treeitem"][aria-level="1"]:eq(0)').click();
+
+  this.$('[role="tree"]').trigger(Ember.$.Event('keydown', { keyCode: 40 }));
+  assert.equal(this.$('[role="tree"]').attr('aria-activedescendant'), this.$('[role="treeitem"][aria-level="1"]:eq(1)').attr('id'));
+});
+
+test('it selects the next sibling of the parent treeitem when down arrow key is pressed', function(assert) {
+  this.$('[role="treeitem"][aria-level="1"]:eq(0)').dblclick();
+  this.$('[role="treeitem"][aria-level="1"]:eq(0) [role="treeitem"][aria-level="2"]:last-child').click();
+
+  this.$('[role="tree"]').trigger(Ember.$.Event('keydown', { keyCode: 40 }));
+  assert.equal(this.$('[role="tree"]').attr('aria-activedescendant'), this.$('[role="treeitem"][aria-level="1"]:eq(1)').attr('id'));
+});
+
+test('it collapses the (expanded) currently-focused node when left arrow key is pressed', function(assert) {
+  this.$('[role="treeitem"][aria-level="1"]:eq(0)').click();
+  this.$('[role="treeitem"][aria-level="1"]:eq(0)').dblclick();
+
+  assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('aria-expanded'), 'true');
+  assert.equal(this.$('[role="tree"]').attr('aria-activedescendant'), this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('id'));
+
+  this.$('[role="tree"]').trigger(Ember.$.Event('keydown', { keyCode: 37 }));
+  assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('aria-expanded'), 'false');
+  assert.equal(this.$('[role="tree"]').attr('aria-activedescendant'), this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('id'));
+});
+
+test('it selects the parent of the (collapsed) currently-focused node when left arrow key is pressed', function(assert) {
+  this.$('[role="treeitem"][aria-level="1"]:eq(0)').dblclick();
+  this.$('[role="treeitem"][aria-level="1"] [role="treeitem"][aria-level="2"]:eq(0)').click();
+
+  assert.equal(this.$('[role="tree"]').attr('aria-activedescendant'), this.$('[role="treeitem"][aria-level="1"] [role="treeitem"][aria-level="2"]:eq(0)').attr('id'));
+
+  this.$('[role="tree"]').trigger(Ember.$.Event('keydown', { keyCode: 37 }));
+  assert.equal(this.$('[role="tree"]').attr('aria-activedescendant'), this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('id'));
+});
+
+test('it expands a collapsed treeitem and selects its first child when right arrow key is pressed', function(assert) {
+  this.$('[role="treeitem"][aria-level="1"]:eq(0)').click();
+
+  assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('aria-expanded'), 'false');
+
+  this.$('[role="tree"]').trigger(Ember.$.Event('keydown', { keyCode: 39 }));
+  assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('aria-expanded'), 'true');
+  assert.equal(this.$('[role="tree"]').attr('aria-activedescendant'), this.$('[role="treeitem"][aria-level="1"] [role="treeitem"][aria-level="2"]:eq(0)').attr('id'));
+});
+
+test('it expands all treeitems when asterisk (shift+8) key is pressed', function(assert) {
+  assert.notEqual(this.$('[role="treeitem"][aria-expanded="false"]').length, 0);
+
+  this.$('[role="tree"]').trigger(Ember.$.Event('keydown', { keyCode: 56, shiftKey: true }));
+  assert.equal(this.$('[role="treeitem"][aria-expanded="false"]').length, 0);
+});
+
+test('it selects the first, visible treeitem when home key is pressed', function(assert) {
+  this.$('[role="treeitem"][aria-level="1"]:eq(1)').click();
+
+  assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('aria-selected'), 'false');
+
+  this.$('[role="tree"]').trigger(Ember.$.Event('keydown', { keyCode: 36 }));
+
+  assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(0)').attr('aria-selected'), 'true');
+});
+
+test('it selects the last, visible treeitem when end key is pressed', function(assert) {
+  this.$('[role="treeitem"][aria-level="1"]:eq(1)').click();
+
+  assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(2)').attr('aria-selected'), 'false');
+
+  this.$('[role="tree"]').trigger(Ember.$.Event('keydown', { keyCode: 35 }));
+
+  assert.equal(this.$('[role="treeitem"][aria-level="1"]:eq(2)').attr('aria-selected'), 'true');
+
+  // expand the last item to make deeper items visible.
+  this.$('[role="treeitem"][aria-level="1"]:eq(2)').dblclick();
+  this.$('[role="tree"]').trigger(Ember.$.Event('keydown', { keyCode: 35 }));
+
+  assert.equal(this.$('[role="treeitem"][aria-level="2"]:eq(8)').attr('aria-selected'), 'true');
 });

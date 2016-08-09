@@ -2,8 +2,7 @@
 
 [![Build Status](https://travis-ci.org/IvyApp/ivy-tree.svg?branch=master)](https://travis-ci.org/IvyApp/ivy-tree)
 
-A group of [Ember.js Components] that interact to create a [WAI-ARIA tree]
-interface.
+A group of [Ember](http://emberjs.com) Components that interact to create a [WAI-ARIA tree](http://www.w3.org/TR/wai-aria/roles#tree) interface.
 
 ## Installation
 
@@ -13,53 +12,62 @@ $ ember install ivy-tree
 
 ## Usage
 
-The following example is adapted from the [OpenAjax Alliance Accessibility
-Treeview Example][tree example]:
+The following example is adapted from the [OpenAjax Alliance Accessibility Treeview Example](http://cookiecrook.com/test/aria/tree/ariatree2.html):
 
 ```handlebars
 {{#ivy-tree as |tree|}}
-  {{#tree.item as |fruits|}}
+  {{#tree.treeitem as |fruits|}}
     <span>Fruits</span>
     {{#fruits.group as |fruitsGroup|}}
-      {{#fruitsGroup.item}}Oranges{{/fruitsGroup.item}}
-      {{#fruitsGroup.item}}Pineapples{{/fruitsGroup.item}}
-      {{#fruitsGroup.item as |apples|}}
+      {{#fruitsGroup.treeitem}}Oranges{{/fruitsGroup.treeitem}}
+      {{#fruitsGroup.treeitem}}Pineapples{{/fruitsGroup.treeitem}}
+      {{#fruitsGroup.treeitem as |apples|}}
         <span>Apples</span>
         {{#apples.group as |applesGroup|}}
-          {{#applesGroup.item}}Macintosh{{/applesGroup.item}}
-          {{#applesGroup.item as |granny|}}
+          {{#applesGroup.treeitem}}Macintosh{{/applesGroup.treeitem}}
+          {{#applesGroup.treeitem as |granny|}}
             <span>Granny Smith</span>
             {{#granny.group as |grannyGroup|}}
-              {{#grannyGroup.item}}Washington State{{/grannyGroup.item}}
-              {{#grannyGroup.item}}Michigan{{/grannyGroup.item}}
-              {{#grannyGroup.item}}New York{{/grannyGroup.item}}
+              {{#grannyGroup.treeitem}}Washington State{{/grannyGroup.treeitem}}
+              {{#grannyGroup.treeitem}}Michigan{{/grannyGroup.treeitem}}
+              {{#grannyGroup.treeitem}}New York{{/grannyGroup.treeitem}}
             {{/granny.group}}
-          {{/applesGroup.item}}
-          {{#applesGroup.item}}Fuji{{/applesGroup.item}}
+          {{/applesGroup.treeitem}}
+          {{#applesGroup.treeitem}}Fuji{{/applesGroup.treeitem}}
         {{/apples.group}}
-      {{/fruitsGroup.item}}
-      {{#fruitsGroup.item}}Bananas{{/fruitsGroup.item}}
-      {{#fruitsGroup.item}}Pears{{/fruitsGroup.item}}
+      {{/fruitsGroup.treeitem}}
+      {{#fruitsGroup.treeitem}}Bananas{{/fruitsGroup.treeitem}}
+      {{#fruitsGroup.treeitem}}Pears{{/fruitsGroup.treeitem}}
     {{/fruits.group}}
-  {{/tree.item}}
-  {{#tree.item as |veggies|}}
+  {{/tree.treeitem}}
+  {{#tree.treeitem as |veggies|}}
     <span>Vegetables</span>
     {{#veggies.group as |veggiesGroup|}}
-      {{#veggiesGroup.item}}Broccoli{{/veggiesGroup.item}}
-      {{#veggiesGroup.item}}Carrots{{/veggiesGroup.item}}
+      {{#veggiesGroup.treeitem}}Broccoli{{/veggiesGroup.treeitem}}
+      {{#veggiesGroup.treeitem}}Carrots{{/veggiesGroup.treeitem}}
     {{/veggies.group}}
-  {{/tree.item}}
+  {{/tree.treeitem}}
 {{/ivy-tree}}
 ```
 
-Some things to note:
+### Keyboard Shortcuts
 
-* `ivy-tree-group` must be an immediate child of `ivy-tree-item`.
+The following keyboard shortcuts are supported:
+
+  * `Up`: Select the previous visible tree item.
+  * `Down`: Select the next visible tree item.
+  * `Left`: Collapse the selected node, if it has children and is expanded. Otherwise, select its parent node.
+  * `Right`: Expand the selected node, if it has children and is collapsed. Select its first child node.
+  * `Home`: Select the first visible tree item.
+  * `End`: Select the last visible tree item.
+  * `Enter`: Toggle the expanded or collapsed state of the selected node.
+  * `*`: Expand all parent nodes in the tree.
+
+In addition, clicking a node will select it, and double-clicking a parent node will toggle its expanded or collapsed state.
 
 ## Contributing
 
-Fork this repo, make a new branch, and send a pull request. Make sure your
-change is tested or it won't be merged.
+Fork this repo, make a new branch, and send a pull request. Make sure your change is tested or it won't be merged.
 
 ### Installation
 
@@ -85,7 +93,6 @@ ember test    # or
 npm test      # (Runs `ember try:testall` to test your addon against multiple Ember versions)
 ```
 
-
 Or, to start a test server:
 
 ```sh
@@ -98,9 +105,4 @@ ember test --server
 ember build
 ```
 
-For more information on using ember-cli, visit
-[http://ember-cli.com/](http://ember-cli.com/).
-
-[Ember.js Components]: http://emberjs.com/guides/components/
-[WAI-ARIA tree]: http://www.w3.org/TR/wai-aria/roles#tree
-[tree example]: http://oaa-accessibility.org/examplep/treeview1/
+For more information on using ember-cli, visit [http://ember-cli.com/](http://ember-cli.com/).

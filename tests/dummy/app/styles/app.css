@@ -1,26 +1,28 @@
-html, body {
-  margin: 20px;
+[role="tree"], [role="group"] {
+  list-style-type: none;
 }
 
-.list-group-item {
+[role="tree"] {
+  margin: 0;
+  padding: 0;
+}
+
+[role="treeitem"] > span {
+  cursor: pointer;
+  display: block;
   user-select: none;
-  cursor: default;
-  background-color: rgba(0,150,0,0.1);
 }
 
-.list-group {
-  max-width: 400px;
+[role="tree"]:focus .active > span {
+  background-color: #03c;
+  color: #fff;
 }
 
-ul[aria-hidden=true] {
-  display: none;
+[role="tree"] .active > span {
+  background-color: #ccc;
 }
 
-li[aria-expanded=true] > .badge {
-  display: none;
-}
-
-[aria-expanded="true"] > .caret {
+[role="treeitem"][aria-expanded="true"] > span > .caret {
+  border-top: 0;
   border-bottom: 4px dashed;
-  border-top: 0 none;
 }
