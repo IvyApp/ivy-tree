@@ -87,6 +87,8 @@ export default Component.extend({
 
   previousSibling: null,
 
+  tagName: 'li',
+
   toggleExpanded() {
     this.toggleProperty('isExpanded');
   },

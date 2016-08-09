@@ -189,6 +189,8 @@ export default Component.extend({
 
   tabindex: 0,
 
+  tagName: 'ul',
+
   toggleExpanded(event) {
     const activeDescendant = this.get('activeDescendant');
 
