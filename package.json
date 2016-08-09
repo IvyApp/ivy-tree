@@ -1,6 +1,6 @@
 {
   "name": "ivy-tree",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "WAI-ARIA accessible trees for Ember.",
   "directories": {
     "doc": "doc",
