@@ -9,108 +9,108 @@ moduleForComponent('ivy-tree', 'Integration | Component | ivy-tree', {
   beforeEach() {
     this.render(hbs`
       {{#ivy-tree as |tree|}}
-        {{#tree.item as |item|}}
+        {{#tree.treeitem as |treeitem|}}
           Animals
-          {{#item.group as |group|}}
-            {{#group.item as |item|}}
+          {{#treeitem.group as |group|}}
+            {{#group.treeitem as |treeitem|}}
               Birds
-            {{/group.item}}
-            {{#group.item as |item|}}
+            {{/group.treeitem}}
+            {{#group.treeitem as |treeitem|}}
               Cats
-              {{#item.group as |group|}}
-                {{#group.item}}
+              {{#treeitem.group as |group|}}
+                {{#group.treeitem}}
                   Siamese
-                {{/group.item}}
-                {{#group.item}}
+                {{/group.treeitem}}
+                {{#group.treeitem}}
                   Tabby
-                {{/group.item}}
-              {{/item.group}}
-            {{/group.item}}
-            {{#group.item as |item|}}
+                {{/group.treeitem}}
+              {{/treeitem.group}}
+            {{/group.treeitem}}
+            {{#group.treeitem as |treeitem|}}
               Dogs
-              {{#item.group as |group|}}
-                {{#group.item as |item|}}
+              {{#treeitem.group as |group|}}
+                {{#group.treeitem as |treeitem|}}
                   Small Breeds
-                  {{#item.group as |group|}}
-                    {{#group.item}}
+                  {{#treeitem.group as |group|}}
+                    {{#group.treeitem}}
                       Chihuahua
-                    {{/group.item}}
-                    {{#group.item}}
+                    {{/group.treeitem}}
+                    {{#group.treeitem}}
                       Italian Greyhound
-                    {{/group.item}}
-                    {{#group.item}}
+                    {{/group.treeitem}}
+                    {{#group.treeitem}}
                       Japanese Chin
-                    {{/group.item}}
-                  {{/item.group}}
-                {{/group.item}}
-                {{#group.item as |item|}}
+                    {{/group.treeitem}}
+                  {{/treeitem.group}}
+                {{/group.treeitem}}
+                {{#group.treeitem as |treeitem|}}
                   Medium Breeds
-                  {{#item.group as |group|}}
-                    {{#group.item}}
+                  {{#treeitem.group as |group|}}
+                    {{#group.treeitem}}
                       Beagle
-                    {{/group.item}}
-                    {{#group.item}}
+                    {{/group.treeitem}}
+                    {{#group.treeitem}}
                       Cocker Spaniel
-                    {{/group.item}}
-                    {{#group.item}}
+                    {{/group.treeitem}}
+                    {{#group.treeitem}}
                       Pit Bull
-                    {{/group.item}}
-                  {{/item.group}}
-                {{/group.item}}
-                {{#group.item as |item|}}
+                    {{/group.treeitem}}
+                  {{/treeitem.group}}
+                {{/group.treeitem}}
+                {{#group.treeitem as |treeitem|}}
                   Large Breeds
-                  {{#item.group as |group|}}
-                    {{#group.item}}
+                  {{#treeitem.group as |group|}}
+                    {{#group.treeitem}}
                       Afghan
-                    {{/group.item}}
-                    {{#group.item}}
+                    {{/group.treeitem}}
+                    {{#group.treeitem}}
                       Great Dane
-                    {{/group.item}}
-                    {{#group.item}}
+                    {{/group.treeitem}}
+                    {{#group.treeitem}}
                       Mastiff
-                    {{/group.item}}
-                  {{/item.group}}
-                {{/group.item}}
-              {{/item.group}}
-            {{/group.item}}
-          {{/item.group}}
-        {{/tree.item}}
-        {{#tree.item activeClass="is-active" as |item|}}
+                    {{/group.treeitem}}
+                  {{/treeitem.group}}
+                {{/group.treeitem}}
+              {{/treeitem.group}}
+            {{/group.treeitem}}
+          {{/treeitem.group}}
+        {{/tree.treeitem}}
+        {{#tree.treeitem activeClass="is-active" as |treeitem|}}
           Minerals
-          {{#item.group as |group|}}
-            {{#group.item}}
+          {{#treeitem.group as |group|}}
+            {{#group.treeitem}}
               Zinc
-            {{/group.item}}
-            {{#group.item as |item|}}
+            {{/group.treeitem}}
+            {{#group.treeitem as |treeitem|}}
               Gold
-              {{#item.group as |group|}}
-                {{#group.item}}
+              {{#treeitem.group as |group|}}
+                {{#group.treeitem}}
                   Yellow Gold
-                {{/group.item}}
-                {{#group.item}}
+                {{/group.treeitem}}
+                {{#group.treeitem}}
                   White Gold
-                {{/group.item}}
-              {{/item.group}}
-            {{/group.item}}
-            {{#group.item}}
+                {{/group.treeitem}}
+              {{/treeitem.group}}
+            {{/group.treeitem}}
+            {{#group.treeitem}}
               Silver
-            {{/group.item}}
-          {{/item.group}}
-        {{/tree.item}}
-        {{#tree.item as |item|}}
+            {{/group.treeitem}}
+          {{/treeitem.group}}
+        {{/tree.treeitem}}
+        {{#tree.treeitem as |treeitem|}}
           Vegetables
-          {{#item.group as |group|}}
-            {{#group.item}}
+          {{#treeitem.group as |group|}}
+            {{#group.treeitem}}
               Carrot
-            {{/group.item}}
-            {{#group.item}}
+            {{/group.treeitem}}
+            {{#group.treeitem}}
               Tomato
-            {{/group.item}}
-            {{#group.item}}
+            {{/group.treeitem}}
+            {{#group.treeitem}}
               Lettuce
-            {{/group.item}}
-          {{/item.group}}
-        {{/tree.item}}
+            {{/group.treeitem}}
+          {{/treeitem.group}}
+        {{/tree.treeitem}}
       {{/ivy-tree}}
     `);
   }
