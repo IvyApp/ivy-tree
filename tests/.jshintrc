@@ -41,13 +41,12 @@
   "nomen": false,
   "onevar": false,
   "plusplus": false,
-  "quotmark": true,
   "regexp": false,
   "undef": true,
   "sub": true,
   "strict": false,
   "white": false,
   "eqnull": true,
-  "esnext": true,
+  "esversion": 6,
   "unused": true
 }
