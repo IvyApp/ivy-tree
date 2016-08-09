@@ -1,0 +1,1 @@
+[role=tree],[role=group]{list-style-type:none}[role=tree]{margin:0;padding:0}[role=treeitem]>span{cursor:pointer;display:block;user-select:none}[role=tree]:focus .active>span{background-color:#03c;color:#fff}[role=tree] .active>span{background-color:#ccc}[role=treeitem][aria-expanded=true]>span>.caret{border-top:0;border-bottom:4px dashed}
