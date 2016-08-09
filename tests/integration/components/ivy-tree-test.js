@@ -268,3 +268,18 @@ test('it selects the last, visible treeitem when end key is pressed', function(a
 
   assert.equal(this.$('[role="treeitem"][aria-level="2"]:eq(8)').attr('aria-selected'), 'true');
 });
+
+test('it sends an "onSelect" action when a treeitem is selected', function(assert) {
+  assert.expect(1);
+
+  this.on('onSelect', function() {
+    assert.ok(true);
+  });
+  this.render(hbs`
+    {{#ivy-tree as |tree|}}
+      {{tree.treeitem onSelect=(action "onSelect")}}
+    {{/ivy-tree}}
+  `);
+
+  this.$('[role="treeitem"][aria-level="1"]:eq(0)').click();
+});

@@ -6,6 +6,7 @@ import { appendChild, remove } from '../-private/nodes';
 export default Component.extend({
   activate() {
     this.get('tree').activate(this);
+    this.sendAction('onSelect');
   },
 
   active: computed('activeClass', 'isActive', function() {
