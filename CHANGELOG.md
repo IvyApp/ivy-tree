@@ -1,7 +1,5 @@
-# ivy-tree changelog
+# ivy-tree Changelog
 
-[![Build Status](https://travis-ci.org/IvyApp/ivy-tree.svg?branch=master)](https://travis-ci.org/IvyApp/ivy-tree)
+## 0.1.0 (August 9, 2016)
 
-## [Unreleased]
-
-[Unreleased]: https://github.com/IvyApp/ivy-tree
+* Initial release.
