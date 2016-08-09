@@ -187,6 +187,8 @@ export default Component.extend({
     }
   },
 
+  tabindex: 0,
+
   toggleExpanded(event) {
     const activeDescendant = this.get('activeDescendant');
 
@@ -197,7 +199,5 @@ export default Component.extend({
     activeDescendant.toggleExpanded();
     event.preventDefault();
     event.stopPropagation();
-  },
-
-  tabindex: 0
+  }
 });
