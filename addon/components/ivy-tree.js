@@ -70,28 +70,36 @@ export default Component.extend({
   moveDown(event) {
     const activeDescendant = this.get('activeDescendant');
 
-    if (!activeDescendant) {
-      return;
-    }
+    if (activeDescendant) {
+      if (activeDescendant.get('hasChildren') && activeDescendant.get('isExpanded')) {
+        activeDescendant.get('firstChild').activate();
+        event.preventDefault();
+        event.stopPropagation();
+      } else {
+        let node = null;
+        let parent = activeDescendant;
 
-    if (activeDescendant.get('hasChildren') && activeDescendant.get('isExpanded')) {
-      activeDescendant.get('firstChild').activate();
-      event.preventDefault();
-      event.stopPropagation();
-    } else {
-      let node = null;
-      let parent = activeDescendant;
+        while (!node && parent) {
+          node = parent.get('nextSibling');
+          parent = parent.get('parent');
+        }
 
-      while (!node && parent) {
-        node = parent.get('nextSibling');
-        parent = parent.get('parent');
+        if (node) {
+          node.activate();
+          event.preventDefault();
+          event.stopPropagation();
+        }
       }
+    } else {
+      const firstChild = this.get('firstChild');
 
-      if (node) {
-        node.activate();
+      if (firstChild) {
+        firstChild.activate();
         event.preventDefault();
         event.stopPropagation();
       }
+
+      return;
     }
   },
 

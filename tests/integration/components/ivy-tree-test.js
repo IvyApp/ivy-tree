@@ -191,6 +191,17 @@ test('it selects the next sibling of the parent treeitem when down arrow key is 
   assert.equal(this.$('[role="tree"]').attr('aria-activedescendant'), this.$('[role="treeitem"][aria-level="1"]:eq(1)').attr('id'));
 });
 
+test('it selects the first treeitem when down arrow key is pressed', function(assert) {
+  this.render(hbs`
+    {{#ivy-tree as |tree|}}
+      {{tree.treeitem}}
+    {{/ivy-tree}}
+  `);
+
+  this.$('[role="tree"]').trigger(Ember.$.Event('keydown', { keyCode: 40 }));
+  assert.equal(this.$('[role="tree"]').attr('aria-activedescendant'), this.$('[role="treeitem"]:eq(0)').attr('id'));
+});
+
 test('it collapses the (expanded) currently-focused node when left arrow key is pressed', function(assert) {
   this.render(hbs`
     {{#ivy-tree as |tree|}}
