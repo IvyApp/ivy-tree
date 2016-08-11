@@ -1,7 +1,7 @@
 import Component from 'ember-component';
 import computed, { notEmpty } from 'ember-computed';
 import layout from '../templates/components/ivy-treeitem';
-import { appendChild, remove } from '../-private/nodes';
+import { insertBefore, remove } from '../-private/nodes';
 
 export default Component.extend({
   activate() {
@@ -52,15 +52,6 @@ export default Component.extend({
     this.set('isExpanded', false);
   },
 
-  didReceiveAttrs() {
-    this._super(...arguments);
-
-    const parent = this.get('parent');
-
-    if (parent) {
-      appendChild(parent, this);
-    }
-  },
 
   doubleClick(event) {
     this.toggleExpanded();
@@ -75,6 +66,16 @@ export default Component.extend({
   firstChild: null,
 
   hasChildren: notEmpty('firstChild'),
+
+  init() {
+    this._super(...arguments);
+
+    const parent = this.get('parent');
+
+    if (parent) {
+      insertBefore(parent, this, this.get('nextSibling'));
+    }
+  },
 
   isActive: computed('tree.activeDescendant', function() {
     return this.get('tree.activeDescendant') === this;

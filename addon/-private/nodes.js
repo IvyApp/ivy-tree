@@ -1,18 +1,4 @@
-export function appendChild(parent, newChild) {
-  const lastChild = parent.get('lastChild');
-
-  if (lastChild) {
-    insertAfter(newChild, lastChild);
-  } else {
-    newChild.set('parent', parent);
-    parent.set('firstChild', newChild);
-    parent.set('lastChild', newChild);
-  }
-
-  return newChild;
-}
-
-export function insertAfter(newChild, refChild) {
+function insertAfter(newChild, refChild) {
   const nextSibling = refChild.get('nextSibling');
 
   if (nextSibling) {
@@ -29,33 +15,6 @@ export function insertAfter(newChild, refChild) {
   newChild.set('previousSibling', refChild);
   newChild.set('nextSibling', nextSibling);
   refChild.set('nextSibling', newChild);
-
-  return newChild;
-}
-
-export function insertBefore(newChild, refChild) {
-  if (refChild === newChild) {
-    return;
-  }
-
-  const previousSibling = refChild.get('previousSibling');
-
-  if (previousSibling) {
-    previousSibling.set('nextSibling', newChild);
-  }
-
-  const parent = refChild.get('parent');
-
-  if (parent && parent.get('firstChild') === refChild) {
-    parent.set('firstChild', newChild);
-  }
-
-  newChild.set('parent', parent);
-  newChild.set('previousSibling', previousSibling);
-  newChild.set('nextSibling', refChild);
-  refChild.set('previousSibling', newChild);
-
-  return newChild;
 }
 
 export function remove(oldChild) {
@@ -83,6 +42,43 @@ export function remove(oldChild) {
   oldChild.set('parent', null);
   oldChild.set('previousSibling', null);
   oldChild.set('nextSibling', null);
+}
 
-  return oldChild;
+export function insertBefore(parent, newChild, refChild) {
+  if (refChild !== newChild) {
+    remove(newChild);
+
+    if (refChild === null) {
+      const lastChild = parent.get('lastChild');
+
+      if (lastChild) {
+        insertAfter(newChild, lastChild);
+      } else {
+        newChild.set('parent', parent);
+        parent.set('firstChild', newChild);
+        parent.set('lastChild', newChild);
+      }
+    } else {
+      const previousSibling = refChild.get('previousSibling');
+
+      if (previousSibling) {
+        previousSibling.set('nextSibling', newChild);
+      }
+
+      const parent = refChild.get('parent');
+
+      if (parent && parent.get('firstChild') === refChild) {
+        parent.set('firstChild', newChild);
+      }
+
+      newChild.set('parent', parent);
+      newChild.set('previousSibling', previousSibling);
+      newChild.set('nextSibling', refChild);
+      refChild.set('previousSibling', newChild);
+    }
+  }
+}
+
+export function appendChild(parent, newChild) {
+  insertBefore(parent, newChild, null);
 }
