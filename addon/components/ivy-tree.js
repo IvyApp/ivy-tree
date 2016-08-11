@@ -76,6 +76,8 @@ export default Component.extend({
 
     if (activeDescendant.get('hasChildren') && activeDescendant.get('isExpanded')) {
       activeDescendant.get('firstChild').activate();
+      event.preventDefault();
+      event.stopPropagation();
     } else {
       let node = null;
       let parent = activeDescendant;
@@ -87,11 +89,10 @@ export default Component.extend({
 
       if (node) {
         node.activate();
+        event.preventDefault();
+        event.stopPropagation();
       }
     }
-
-    event.preventDefault();
-    event.stopPropagation();
   },
 
   moveEnd(event) {
