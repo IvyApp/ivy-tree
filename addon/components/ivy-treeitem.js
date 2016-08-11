@@ -1,5 +1,5 @@
 import Component from 'ember-component';
-import computed, { notEmpty } from 'ember-computed';
+import computed, { notEmpty, oneWay } from 'ember-computed';
 import layout from '../templates/components/ivy-treeitem';
 import { insertBefore, remove } from '../-private/nodes';
 
@@ -49,7 +49,12 @@ export default Component.extend({
   },
 
   collapse() {
-    this.set('isExpanded', false);
+    if (!this.get('isExpanded')) {
+      return;
+    }
+
+    this.set('_isExpanded', false);
+    this.sendAction('onToggle', false);
   },
 
 
@@ -60,7 +65,12 @@ export default Component.extend({
   },
 
   expand() {
-    this.set('isExpanded', true);
+    if (this.get('isExpanded')) {
+      return;
+    }
+
+    this.set('_isExpanded', true);
+    this.sendAction('onToggle', true);
   },
 
   firstChild: null,
@@ -81,7 +91,9 @@ export default Component.extend({
     return this.get('tree.activeDescendant') === this;
   }).readOnly(),
 
-  isExpanded: false,
+  _isExpanded: false,
+
+  isExpanded: oneWay('_isExpanded'),
 
   layout,
 
@@ -92,7 +104,11 @@ export default Component.extend({
   tagName: 'li',
 
   toggleExpanded() {
-    this.toggleProperty('isExpanded');
+    if (this.get('isExpanded')) {
+      this.collapse();
+    } else {
+      this.expand();
+    }
   },
 
   willDestroy() {

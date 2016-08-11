@@ -340,3 +340,18 @@ test('it sends an "onSelect" action when a treeitem is selected', function(asser
 
   this.$('[role="treeitem"][aria-level="1"]:eq(0)').click();
 });
+
+test('it sends an "onToggle" action when a treeitem is expanded', function(assert) {
+  assert.expect(1);
+
+  this.on('onToggle', function(isExpanded) {
+    assert.equal(isExpanded, true);
+  });
+  this.render(hbs`
+    {{#ivy-tree as |tree|}}
+      {{tree.treeitem onToggle=(action "onToggle")}}
+    {{/ivy-tree}}
+  `);
+
+  this.$('[role="treeitem"][aria-level="1"]:eq(0)').dblclick();
+});
