@@ -212,6 +212,27 @@ test('it selects the first treeitem when down arrow key is pressed', function(as
   assert.equal(this.$('[role="tree"]').attr('aria-activedescendant'), this.$('[role="treeitem"]:eq(0)').attr('id'));
 });
 
+test('treeitem does not carry an aria-expanded attribute when it is a leaf node', function(assert) {
+  this.render(hbs`
+    {{#ivy-tree as |tree|}}
+      {{tree.treeitem}}
+    {{/ivy-tree}}
+  `);
+
+  assert.notOk(!!this.$('[role="treeitem"]:eq(0)').is('[aria-expanded]'));
+
+  this.render(hbs`
+    {{#ivy-tree as |tree|}}
+      {{#tree.treeitem as |treeitem|}}
+        {{#treeitem.group as |group|}}
+        {{/treeitem.group}}
+      {{/tree.treeitem}}
+    {{/ivy-tree}}
+  `);
+
+  assert.notOk(!!this.$('[role="treeitem"]:eq(0)').is('[aria-expanded]'));
+});
+
 test('it collapses the (expanded) currently-focused node when left arrow key is pressed', function(assert) {
   this.render(hbs`
     {{#ivy-tree as |tree|}}

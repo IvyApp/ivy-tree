@@ -15,8 +15,8 @@ export default Component.extend({
 
   activeClass: 'active',
 
-  ariaExpanded: computed('isExpanded', function() {
-    return this.get('isExpanded') + '';
+  ariaExpanded: computed('hasChildren', 'isExpanded', function() {
+    return this.get('hasChildren') ? this.get('isExpanded') + '' : null;
   }).readOnly(),
 
   ariaHidden: computed('parent.isExpanded', 'tree', function() {
