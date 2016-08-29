@@ -1,18 +1,9 @@
 import Component from 'ember-component';
+import TreeNodeMixin from '../mixins/tree-node';
 import layout from '../templates/components/ivy-tree';
 import { readOnly } from 'ember-computed';
 
-function traverse(node, callback, thisArg) {
-  let child = node.get('firstChild');
-
-  while (child) {
-    callback.call(thisArg, child);
-    traverse(child, callback, thisArg);
-    child = child.get('nextSibling');
-  }
-}
-
-export default Component.extend({
+export default Component.extend(TreeNodeMixin, {
   activate(treeitem) {
     this.set('activeDescendant', treeitem);
   },
@@ -27,7 +18,7 @@ export default Component.extend({
   ],
 
   expandAll() {
-    traverse(this, function(node) {
+    this.treeNodeTraverse(function(node) {
       node.expand();
     });
   },
@@ -71,17 +62,17 @@ export default Component.extend({
     const activeDescendant = this.get('activeDescendant');
 
     if (activeDescendant) {
-      if (activeDescendant.get('hasChildren') && activeDescendant.get('isExpanded')) {
-        activeDescendant.get('firstChild').activate();
+      if (activeDescendant.get('treeNodeHasChildren') && activeDescendant.get('isExpanded')) {
+        activeDescendant.get('treeNodeFirstChild').activate();
         event.preventDefault();
         event.stopPropagation();
       } else {
         let node = null;
-        let parent = activeDescendant;
+        let treeNodeParent = activeDescendant;
 
-        while (!node && parent) {
-          node = parent.get('nextSibling');
-          parent = parent.get('parent');
+        while (!node && treeNodeParent) {
+          node = treeNodeParent.get('treeNodeNextSibling');
+          treeNodeParent = treeNodeParent.get('treeNodeParent');
         }
 
         if (node) {
@@ -91,10 +82,10 @@ export default Component.extend({
         }
       }
     } else {
-      const firstChild = this.get('firstChild');
+      const treeNodeFirstChild = this.get('treeNodeFirstChild');
 
-      if (firstChild) {
-        firstChild.activate();
+      if (treeNodeFirstChild) {
+        treeNodeFirstChild.activate();
         event.preventDefault();
         event.stopPropagation();
       }
@@ -104,10 +95,10 @@ export default Component.extend({
   },
 
   moveEnd(event) {
-    let node = this.get('lastChild');
+    let node = this.get('treeNodeLastChild');
 
-    while (node && node.get('hasChildren') && node.get('isExpanded')) {
-      node = node.get('lastChild');
+    while (node && node.get('treeNodeHasChildren') && node.get('isExpanded')) {
+      node = node.get('treeNodeLastChild');
     }
 
     if (node) {
@@ -119,7 +110,7 @@ export default Component.extend({
   },
 
   moveHome(event) {
-    const node = this.get('firstChild');
+    const node = this.get('treeNodeFirstChild');
 
     if (!node) {
       return;
@@ -137,13 +128,13 @@ export default Component.extend({
       return;
     }
 
-    if (activeDescendant.get('hasChildren') && activeDescendant.get('isExpanded')) {
+    if (activeDescendant.get('treeNodeHasChildren') && activeDescendant.get('isExpanded')) {
       activeDescendant.collapse();
     } else {
-      const parent = activeDescendant.get('parent');
+      const treeNodeParent = activeDescendant.get('treeNodeParent');
 
-      if (parent && parent !== this) {
-        parent.activate();
+      if (treeNodeParent && treeNodeParent !== this) {
+        treeNodeParent.activate();
       }
     }
 
@@ -158,10 +149,10 @@ export default Component.extend({
       return;
     }
 
-    if (activeDescendant.get('hasChildren')) {
+    if (activeDescendant.get('treeNodeHasChildren')) {
       activeDescendant.expand();
 
-      const node = activeDescendant.get('firstChild');
+      const node = activeDescendant.get('treeNodeFirstChild');
 
       if (node) {
         node.activate();
@@ -179,14 +170,14 @@ export default Component.extend({
       return;
     }
 
-    let node = activeDescendant.get('previousSibling');
+    let node = activeDescendant.get('treeNodePreviousSibling');
 
-    while (node && node.get('hasChildren') && node.get('isExpanded')) {
-      node = node.get('lastChild');
+    while (node && node.get('treeNodeHasChildren') && node.get('isExpanded')) {
+      node = node.get('treeNodeLastChild');
     }
 
     if (!node) {
-      node = activeDescendant.get('parent');
+      node = activeDescendant.get('treeNodeParent');
     }
 
     if (node && node !== this) {

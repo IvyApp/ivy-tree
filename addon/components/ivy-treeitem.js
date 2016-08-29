@@ -1,9 +1,9 @@
 import Component from 'ember-component';
-import computed, { notEmpty, oneWay } from 'ember-computed';
+import TreeNodeMixin from '../mixins/tree-node';
+import computed, { oneWay } from 'ember-computed';
 import layout from '../templates/components/ivy-treeitem';
-import { insertBefore, remove } from '../-private/nodes';
 
-export default Component.extend({
+export default Component.extend(TreeNodeMixin, {
   activate() {
     this.get('tree').activate(this);
     this.sendAction('onSelect');
@@ -15,17 +15,17 @@ export default Component.extend({
 
   activeClass: 'active',
 
-  ariaExpanded: computed('hasChildren', 'isExpanded', function() {
-    return this.get('hasChildren') ? this.get('isExpanded') + '' : null;
+  ariaExpanded: computed('isExpanded', 'treeNodeHasChildren', function() {
+    return this.get('treeNodeHasChildren') ? this.get('isExpanded') + '' : null;
   }).readOnly(),
 
-  ariaHidden: computed('parent.isExpanded', 'tree', function() {
-    const parent = this.get('parent');
-    return (parent !== this.get('tree') && !parent.get('isExpanded')) + '';
+  ariaHidden: computed('treeNodeParent.isExpanded', 'tree', function() {
+    const treeNodeParent = this.get('treeNodeParent');
+    return (treeNodeParent !== this.get('tree') && !treeNodeParent.get('isExpanded')) + '';
   }).readOnly(),
 
-  ariaLevel: computed('parent.ariaLevel', function() {
-    return this.getWithDefault('parent.ariaLevel', 0) + 1;
+  ariaLevel: computed('treeNodeParent.ariaLevel', function() {
+    return this.getWithDefault('treeNodeParent.ariaLevel', 0) + 1;
   }).readOnly(),
 
   ariaRole: 'treeitem',
@@ -74,18 +74,9 @@ export default Component.extend({
     this.sendAction('onToggle', true);
   },
 
-  firstChild: null,
-
-  hasChildren: notEmpty('firstChild'),
-
   init() {
     this._super(...arguments);
-
-    const parent = this.get('parent');
-
-    if (parent) {
-      insertBefore(parent, this, this.get('nextSibling'));
-    }
+    this.treeNodeAttach();
   },
 
   isActive: computed('tree.activeDescendant', function() {
@@ -98,10 +89,6 @@ export default Component.extend({
 
   layout,
 
-  nextSibling: null,
-
-  previousSibling: null,
-
   tagName: 'li',
 
   toggleExpanded() {
@@ -113,7 +100,7 @@ export default Component.extend({
   },
 
   willDestroy() {
+    this.treeNodeDetach();
     this._super(...arguments);
-    remove(this);
   }
 });
