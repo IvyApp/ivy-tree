@@ -1,7 +1,7 @@
 import Component from 'ember-component';
 import TreeNodeMixin from '../mixins/tree-node';
 import computed, { oneWay } from 'ember-computed';
-import layout from '../templates/components/ivy-treeitem';
+import layout from '../templates/components/ivy-tree-treeitem';
 
 export default Component.extend(TreeNodeMixin, {
   activate() {
