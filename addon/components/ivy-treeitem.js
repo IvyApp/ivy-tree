@@ -19,8 +19,9 @@ export default Component.extend({
     return this.get('isExpanded') + '';
   }).readOnly(),
 
-  ariaHidden: computed('parent.isExpanded', function() {
-    return !this.get('parent.isExpanded') + '';
+  ariaHidden: computed('parent.isExpanded', 'tree', function() {
+    const parent = this.get('parent');
+    return (parent !== this.get('tree') && !parent.get('isExpanded')) + '';
   }).readOnly(),
 
   ariaLevel: computed('parent.ariaLevel', function() {

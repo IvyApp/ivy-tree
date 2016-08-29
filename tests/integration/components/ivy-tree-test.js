@@ -7,6 +7,16 @@ moduleForComponent('ivy-tree', 'Integration | Component | ivy-tree', {
   integration: true
 });
 
+test('top-level items are aria-hidden=false', function(assert) {
+  this.render(hbs`
+    {{#ivy-tree as |tree|}}
+      {{tree.treeitem}}
+    {{/ivy-tree}}
+  `);
+
+  assert.equal(this.$('[role="treeitem"]').attr('aria-hidden'), 'false');
+});
+
 test('it applies an "aria-hidden" attribute to the children of a collapsed treeitem', function(assert) {
   this.render(hbs`
     {{#ivy-tree as |tree|}}
