@@ -40,7 +40,11 @@ test('it sends an "onToggle" action when a treeitem is expanded', function(asser
   });
   this.render(hbs`
     {{#ivy-tree as |tree|}}
-      {{tree.treeitem onToggle=(action "onToggle")}}
+      {{#tree.treeitem onToggle=(action "onToggle") as |treeitem|}}
+        {{#treeitem.group as |group|}}
+          {{group.treeitem}}
+        {{/treeitem.group}}
+      {{/tree.treeitem}}
     {{/ivy-tree}}
   `);
 
