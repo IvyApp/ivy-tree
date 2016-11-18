@@ -4,6 +4,8 @@
 
 A group of [Ember](http://emberjs.com) Components that interact to create a [WAI-ARIA tree](http://www.w3.org/TR/wai-aria/roles#tree) interface.
 
+**Note that this addon makes use of [Contextual Components](http://emberjs.com/blog/2016/01/15/ember-2-3-released.html#toc_contextual-components), which means that it won't work with Ember versions prior to 2.3.**
+
 ## Installation
 
 ```sh
