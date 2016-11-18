@@ -65,10 +65,10 @@ test('expanded parent nodes are [aria-expanded="true"]', function(assert) {
   });
 });
 
-test('leaf nodes do have have an aria-expanded attribute', function(assert) {
+test('leaf nodes are [aria-expanded="false"]', function(assert) {
   visit('/');
 
   andThen(() => {
-    assert.notOk(findWithAssert('[role="treeitem"][aria-level="2"]:contains("Oranges")').is('[aria-expanded]'));
+    assert.equal(findWithAssert('[role="treeitem"][aria-level="2"]:contains("Oranges")').attr('aria-expanded'), 'false');
   });
 });

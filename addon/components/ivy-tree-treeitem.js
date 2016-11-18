@@ -15,8 +15,8 @@ export default Component.extend(TreeNodeMixin, {
 
   activeClass: 'active',
 
-  ariaExpanded: computed('isExpanded', 'treeNodeHasChildren', function() {
-    return this.get('treeNodeHasChildren') ? this.get('isExpanded') + '' : null;
+  ariaExpanded: computed('isExpanded', function() {
+    return this.get('isExpanded') + '';
   }).readOnly(),
 
   ariaHidden: computed('treeNodeParent.isExpanded', 'tree', function() {
@@ -50,7 +50,7 @@ export default Component.extend(TreeNodeMixin, {
   },
 
   collapse() {
-    if (!this.get('isExpanded')) {
+    if (!this.get('isExpanded') || !this.get('treeNodeHasChildren')) {
       return;
     }
 
@@ -66,7 +66,7 @@ export default Component.extend(TreeNodeMixin, {
   },
 
   expand() {
-    if (this.get('isExpanded')) {
+    if (this.get('isExpanded') || !this.get('treeNodeHasChildren')) {
       return;
     }
 

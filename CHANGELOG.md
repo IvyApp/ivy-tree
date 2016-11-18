@@ -1,5 +1,7 @@
 # ivy-tree Changelog
 
+* Always render `aria-expanded` properties on treeitem nodes. This is a not-so-ideal solution for avoiding the Ember deprecation warnings for assigning a property multiple times in a single render loop (see Ember's `[deprecation id: ember-views.render-double-modify]`).
+
 ## 0.1.1 (August 11, 2016)
 
 * Pressing the down arrow when there is no selected treeitem now selects the first one, if any.
