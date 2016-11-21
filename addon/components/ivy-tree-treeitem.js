@@ -1,106 +1,81 @@
 import Component from 'ember-component';
-import TreeNodeMixin from '../mixins/tree-node';
-import computed, { oneWay } from 'ember-computed';
 import layout from '../templates/components/ivy-tree-treeitem';
+import computed, { readOnly } from 'ember-computed';
 
-export default Component.extend(TreeNodeMixin, {
-  activate() {
-    this.get('tree').activate(this);
-    this.sendAction('onSelect');
-  },
-
-  active: computed('activeClass', 'isActive', function() {
-    return this.get('isActive') ? this.get('activeClass') : null;
+export default Component.extend({
+  active: computed('activeClass', 'activeNode', 'node', function() {
+    return this.get('activeNode') === this.get('node') ? this.get('activeClass') : false;
   }).readOnly(),
 
   activeClass: 'active',
 
-  ariaExpanded: computed('isExpanded', function() {
-    return this.get('isExpanded') + '';
+  ariaExpanded: computed('node.expanded', 'node.hasChildNodes', function() {
+    const node = this.get('node');
+
+    if (!node.get('hasChildNodes')) {
+      return;
+    }
+
+    return node.get('expanded') + '';
   }).readOnly(),
 
-  ariaHidden: computed('treeNodeParent.isExpanded', 'tree', function() {
-    const treeNodeParent = this.get('treeNodeParent');
-    return (treeNodeParent !== this.get('tree') && !treeNodeParent.get('isExpanded')) + '';
+  ariaHidden: computed('node.parentNode.expanded', function() {
+    const parentNode = this.get('node.parentNode');
+
+    if (parentNode) {
+      return !parentNode.get('expanded') + '';
+    } else {
+      return 'false';
+    }
   }).readOnly(),
 
-  ariaLevel: computed('treeNodeParent.ariaLevel', function() {
-    return this.getWithDefault('treeNodeParent.ariaLevel', 0) + 1;
-  }).readOnly(),
+  ariaLabel: readOnly('node.label'),
+
+  ariaLevel: readOnly('node.depth'),
 
   ariaRole: 'treeitem',
 
-  ariaSelected: computed('isActive', function() {
-    return this.get('isActive') + '';
+  ariaSelected: computed('activeNode', 'node', function() {
+    return (this.get('activeNode') === this.get('node')) + '';
   }).readOnly(),
 
   attributeBindings: [
     'ariaExpanded:aria-expanded',
     'ariaHidden:aria-hidden',
+    'ariaLabel:aria-label',
     'ariaLevel:aria-level',
     'ariaSelected:aria-selected'
   ],
 
-  classNameBindings: ['active'],
+  classNameBindings: [
+    'active'
+  ],
 
   click(event) {
-    this.activate();
+    this.sendAction('activate', this.get('node'));
     event.preventDefault();
     event.stopPropagation();
   },
-
-  collapse() {
-    if (!this.get('isExpanded') || !this.get('treeNodeHasChildren')) {
-      return;
-    }
-
-    this.set('_isExpanded', false);
-    this.sendAction('onToggle', false);
-  },
-
 
   doubleClick(event) {
-    this.toggleExpanded();
+    const node = this.get('node');
+
+    this.sendAction('expand', !node.get('expanded'), node);
     event.preventDefault();
     event.stopPropagation();
-  },
-
-  expand() {
-    if (this.get('isExpanded') || !this.get('treeNodeHasChildren')) {
-      return;
-    }
-
-    this.set('_isExpanded', true);
-    this.sendAction('onToggle', true);
   },
 
   init() {
     this._super(...arguments);
-    this.treeNodeAttach();
+    this.get('tree').registerTreeItem(this);
   },
-
-  isActive: computed('tree.activeDescendant', function() {
-    return this.get('tree.activeDescendant') === this;
-  }).readOnly(),
-
-  _isExpanded: false,
-
-  isExpanded: oneWay('_isExpanded'),
 
   layout,
 
   tagName: 'li',
 
-  toggleExpanded() {
-    if (this.get('isExpanded')) {
-      this.collapse();
-    } else {
-      this.expand();
-    }
-  },
-
   willDestroy() {
-    this.treeNodeDetach();
     this._super(...arguments);
+    this.get('tree').unregisterTreeItem(this);
   }
 });

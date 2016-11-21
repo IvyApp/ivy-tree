@@ -1,25 +1,32 @@
-[role="tree"], [role="group"] {
-  list-style-type: none;
+[role="tree"] {
+  border: 1px solid #000;
+  cursor: default;
 }
 
-[role="tree"] {
+ul[role="tree"], [role="tree"] li, [role="tree"] ul {
+  display: block;
+  list-style: none;
   margin: 0;
   padding: 0;
 }
 
 [role="treeitem"] > span {
-  cursor: pointer;
   display: block;
-  user-select: none;
+}
+
+/* Looks kinda redundant, but is necessary to get the full left bleed on sub-level items. */
+[role="treeitem"] > span { padding-left: 0px; }
+[role="treeitem"] [role="treeitem"] > span { padding-left: 25px; }
+[role="treeitem"] [role="treeitem"] [role="treeitem"] > span { padding-left: 50px; }
+[role="treeitem"] [role="treeitem"] [role="treeitem"] [role="treeitem"] > span { padding-left: 75px; }
+
+[role="tree"] .active > span {
+  background-color: #ccc;
 }
 
 [role="tree"]:focus .active > span {
   background-color: #03c;
   color: #fff;
-}
-
-[role="tree"] .active > span {
-  background-color: #ccc;
 }
 
 [role="treeitem"][aria-expanded="true"] > span > .caret {

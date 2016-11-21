@@ -2,79 +2,11 @@
   <div class="col-sm-6">
     <h2 class="h3">WAI-ARIA Tree Example</h2>
 
-    {{#ivy-tree as |tree|}}
-      {{#tree.treeitem as |treeitem|}}
-        <span>
-          <span class="caret"></span>
-          Fruits
-        </span>
-        {{#treeitem.group as |group|}}
-          {{#group.treeitem}}<span>Oranges</span>{{/group.treeitem}}
-          {{#group.treeitem}}<span>Pineapples</span>{{/group.treeitem}}
-          {{#group.treeitem as |treeitem|}}
-            <span>
-              <span class="caret"></span>
-              Apples
-            </span>
-            {{#treeitem.group as |group|}}
-              {{#group.treeitem}}<span>Macintosh</span>{{/group.treeitem}}
-              {{#group.treeitem as |treeitem|}}
-                <span>
-                  <span class="caret"></span>
-                  Granny Smith
-                </span>
-                {{#treeitem.group as |group|}}
-                  {{#group.treeitem}}<span>Washington State</span>{{/group.treeitem}}
-                  {{#group.treeitem}}<span>Michigan</span>{{/group.treeitem}}
-                  {{#group.treeitem}}<span>New York</span>{{/group.treeitem}}
-                {{/treeitem.group}}
-              {{/group.treeitem}}
-              {{#group.treeitem}}<span>Fuji</span>{{/group.treeitem}}
-            {{/treeitem.group}}
-          {{/group.treeitem}}
-          {{#group.treeitem}}<span>Bananas</span>{{/group.treeitem}}
-          {{#group.treeitem}}<span>Pears</span>{{/group.treeitem}}
-        {{/treeitem.group}}
-      {{/tree.treeitem}}
-      {{#tree.treeitem as |treeitem|}}
-        <span>
-          <span class="caret"></span>
-          Vegetables
-        </span>
-        {{#treeitem.group as |group|}}
-          {{#group.treeitem}}<span>Broccoli</span>{{/group.treeitem}}
-          {{#group.treeitem}}<span>Carrots</span>{{/group.treeitem}}
-          {{#group.treeitem as |treeitem|}}
-            <span>
-              <span class="caret"></span>
-              Lettuce
-            </span>
-            {{#treeitem.group as |group|}}
-              {{#group.treeitem}}<span>Romaine</span>{{/group.treeitem}}
-              {{#group.treeitem}}<span>Iceberg</span>{{/group.treeitem}}
-              {{#group.treeitem}}<span>Butterhead</span>{{/group.treeitem}}
-            {{/treeitem.group}}
-          {{/group.treeitem}}
-          {{#group.treeitem}}<span>Spinach</span>{{/group.treeitem}}
-          {{#group.treeitem as |treeitem|}}
-            <span>
-              <span class="caret"></span>
-              Squash
-            </span>
-            {{#treeitem.group as |group|}}
-              {{#group.treeitem}}<span>Acorn</span>{{/group.treeitem}}
-              {{#group.treeitem}}<span>Ambercup</span>{{/group.treeitem}}
-              {{#group.treeitem}}<span>Autumn Cup</span>{{/group.treeitem}}
-              {{#group.treeitem}}<span>Hubbard</span>{{/group.treeitem}}
-              {{#group.treeitem}}<span>Kabocha</span>{{/group.treeitem}}
-              {{#group.treeitem}}<span>Butternut</span>{{/group.treeitem}}
-              {{#group.treeitem}}<span>Spaghetti</span>{{/group.treeitem}}
-              {{#group.treeitem}}<span>Sweet Dumpling</span>{{/group.treeitem}}
-              {{#group.treeitem}}<span>Turban</span>{{/group.treeitem}}
-            {{/treeitem.group}}
-          {{/group.treeitem}}
-        {{/treeitem.group}}
-      {{/tree.treeitem}}
+    {{#ivy-tree activate=(action (mut activeNode)) activeNode=activeNode model=model as |node|}}
+      <span>
+        {{#if node.hasChildNodes}}<span class="caret"></span>{{/if}}
+        {{node.label}}
+      </span>
     {{/ivy-tree}}
   </div>
 
