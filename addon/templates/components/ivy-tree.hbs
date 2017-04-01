@@ -1,1 +1,13 @@
-{{yield (hash treeitem=(component "ivy-tree-treeitem" tree=this treeNodeParent=this))}}
+{{#each rootNode.childNodes as |childNode|}}
+  {{#component treeitemComponent
+    activateNode=activateNode
+    activeNode=activeNode
+    collapseNode=collapseNode
+    expandNode=expandNode
+    groupComponent=groupComponent
+    node=childNode
+    tree=this
+    treeitemComponent=treeitemComponent as |descendantNode|}}
+    {{yield descendantNode}}
+  {{/component}}
+{{/each}}

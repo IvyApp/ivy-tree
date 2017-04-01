@@ -1,1 +1,16 @@
-{{yield (hash group=(component "ivy-tree-group" isExpanded=isExpanded tree=tree treeNodeParent=this))}}
+{{yield node}}
+
+{{#if node.hasChildNodes}}
+  {{#component groupComponent
+    activateNode=activateNode
+    activeNode=activeNode
+    collapseNode=collapseNode
+    expandNode=expandNode
+    groupComponent=groupComponent
+    isVisible=node.expanded
+    node=node
+    tree=tree
+    treeitemComponent=treeitemComponent as |descendantNode|}}
+    {{yield descendantNode}}
+  {{/component}}
+{{/if}}
