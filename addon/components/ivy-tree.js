@@ -5,7 +5,7 @@ import layout from '../templates/components/ivy-tree';
 
 export default Component.extend({
   activateNode(node) {
-    this.sendAction('activate', node);
+    this.sendAction('activateNode', node);
   },
 
   activeDescendant: computed('activeNode', function() {
@@ -32,7 +32,7 @@ export default Component.extend({
   ],
 
   collapseNode(node) {
-    this.sendAction('collapse', node);
+    this.sendAction('collapseNode', node);
   },
 
   expandAll() {
@@ -40,7 +40,7 @@ export default Component.extend({
   },
 
   expandNode(node) {
-    this.sendAction('expand', node);
+    this.sendAction('expandNode', node);
   },
 
   groupComponent: 'ivy-tree-group',

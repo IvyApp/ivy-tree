@@ -3,10 +3,10 @@
     <h2 class="h3">WAI-ARIA Tree Example</h2>
 
     {{#ivy-tree
-      activate=(action (mut activeNode))
+      activateNode=(action (mut activeNode))
       activeNode=activeNode
-      collapse=(action 'collapse')
-      expand=(action 'expand')
+      collapseNode=(action 'collapseNode')
+      expandNode=(action 'expandNode')
       model=model as |node|}}
       <span>
         {{#if node.hasChildNodes}}<span class="caret"></span>{{/if}}

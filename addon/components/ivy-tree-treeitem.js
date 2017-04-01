@@ -52,7 +52,7 @@ export default Component.extend({
   ],
 
   click(event) {
-    this.sendAction('activate', this.get('node'));
+    this.sendAction('activateNode', this.get('node'));
     event.preventDefault();
     event.stopPropagation();
   },
@@ -61,9 +61,9 @@ export default Component.extend({
     const node = this.get('node');
 
     if (node.get('expanded')) {
-      this.sendAction('collapse', node);
+      this.sendAction('collapseNode', node);
     } else {
-      this.sendAction('expand', node);
+      this.sendAction('expandNode', node);
     }
 
     event.preventDefault();

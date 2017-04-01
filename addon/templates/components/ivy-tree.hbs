@@ -1,9 +1,9 @@
 {{#each node.childNodes as |childNode|}}
   {{#component treeitemComponent
-    activate=activate
+    activateNode=activateNode
     activeNode=activeNode
-    collapse=collapse
-    expand=expand
+    collapseNode=collapseNode
+    expandNode=expandNode
     groupComponent=groupComponent
     node=childNode
     tree=this

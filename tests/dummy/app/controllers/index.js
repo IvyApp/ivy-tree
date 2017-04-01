@@ -2,11 +2,11 @@ import Controller from 'ember-controller';
 
 export default Controller.extend({
   actions: {
-    collapse(node) {
+    collapseNode(node) {
       node.collapse();
     },
 
-    expand(node) {
+    expandNode(node) {
       node.expand();
     }
   }
