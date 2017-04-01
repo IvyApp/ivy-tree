@@ -36,7 +36,7 @@ export default Component.extend({
   },
 
   expandAll() {
-    this.get('node').traverse(this.expandNode, this);
+    this.get('rootNode').traverse(this.expandNode, this);
   },
 
   expandNode(node) {
@@ -98,7 +98,7 @@ export default Component.extend({
         }
       }
     } else {
-      const firstChild = this.get('node.firstChild');
+      const firstChild = this.get('rootNode.firstChild');
 
       if (firstChild) {
         this.activateNode(firstChild);
@@ -109,7 +109,7 @@ export default Component.extend({
   },
 
   moveEnd(event) {
-    let node = this.get('node.lastChild');
+    let node = this.get('rootNode.lastChild');
 
     while (node && node.get('hasChildren') && node.get('expanded')) {
       node = node.get('lastChild');
@@ -124,7 +124,7 @@ export default Component.extend({
   },
 
   moveHome(event) {
-    const node = this.get('node.firstChild');
+    const node = this.get('rootNode.firstChild');
 
     if (!node) {
       return;
@@ -147,7 +147,7 @@ export default Component.extend({
     } else {
       const parentNode = activeNode.get('parentNode');
 
-      if (parentNode && parentNode !== this.get('node')) {
+      if (parentNode && parentNode !== this.get('rootNode')) {
         this.activateNode(parentNode);
       }
     }
@@ -190,16 +190,12 @@ export default Component.extend({
       node = activeNode.get('parentNode');
     }
 
-    if (node && node !== this.get('node')) {
+    if (node && node !== this.get('rootNode')) {
       this.activateNode(node);
       event.preventDefault();
       event.stopPropagation();
     }
   },
-
-  node: computed('model', function() {
-    return TreeNode.build(this.get('model'));
-  }).readOnly(),
 
   registerTreeItem(item) {
     const node = item.get('node');

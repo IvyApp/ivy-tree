@@ -1,8 +1,9 @@
 import Route from 'ember-route';
+import { buildTree } from 'ivy-tree';
 
 export default Route.extend({
   model() {
-    return [
+    return buildTree([
       { id: 'fruits',           label: 'Fruits',           parent: null           },
       { id: 'oranges',          label: 'Oranges',          parent: 'fruits'       },
       { id: 'pineapples',       label: 'Pineapples',       parent: 'fruits'       },
@@ -33,6 +34,6 @@ export default Route.extend({
       { id: 'spaghetti',        label: 'Spaghetti',        parent: 'squash'       },
       { id: 'sweet-dumpling',   label: 'Sweet Dumpling',   parent: 'squash'       },
       { id: 'turban',           label: 'Turban',           parent: 'squash'       }
-    ];
+    ]);
   }
 });
