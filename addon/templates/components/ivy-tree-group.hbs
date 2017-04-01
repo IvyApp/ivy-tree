@@ -1,5 +1,12 @@
 {{#each node.childNodes as |childNode|}}
-  {{#ivy-tree-treeitem activate=activate activeNode=activeNode expand=expand node=childNode tree=tree as |descendant|}}
-    {{yield descendant}}
-  {{/ivy-tree-treeitem}}
+  {{#component treeitemComponent
+    activate=activate
+    activeNode=activeNode
+    expand=expand
+    groupComponent=groupComponent
+    node=childNode
+    tree=tree
+    treeitemComponent=treeitemComponent as |descendantNode|}}
+    {{yield descendantNode}}
+  {{/component}}
 {{/each}}

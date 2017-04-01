@@ -53,6 +53,8 @@ export default Component.extend({
     node.set('expanded', true);
   },
 
+  groupComponent: 'ivy-tree-group',
+
   init() {
     this._super(...arguments);
     this._idToItem = {};
@@ -245,6 +247,8 @@ export default Component.extend({
       this.expandNode(node);
     }
   },
+
+  treeitemComponent: 'ivy-tree-treeitem',
 
   unregisterTreeItem(item) {
     const node = item.get('node');

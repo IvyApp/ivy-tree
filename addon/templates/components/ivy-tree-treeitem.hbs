@@ -1,7 +1,15 @@
 {{yield node}}
 
 {{#if node.hasChildNodes}}
-  {{#ivy-tree-group activate=activate activeNode=activeNode expand=expand isVisible=node.expanded node=node tree=tree as |descendant|}}
-    {{yield descendant}}
-  {{/ivy-tree-group}}
+  {{#component groupComponent
+    activate=activate
+    activeNode=activeNode
+    expand=expand
+    groupComponent=groupComponent
+    isVisible=node.expanded
+    node=node
+    tree=tree
+    treeitemComponent=treeitemComponent as |descendantNode|}}
+    {{yield descendantNode}}
+  {{/component}}
 {{/if}}
