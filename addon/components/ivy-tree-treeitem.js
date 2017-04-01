@@ -60,7 +60,12 @@ export default Component.extend({
   doubleClick(event) {
     const node = this.get('node');
 
-    this.sendAction('expand', !node.get('expanded'), node);
+    if (node.get('expanded')) {
+      this.sendAction('collapse', node);
+    } else {
+      this.sendAction('expand', node);
+    }
+
     event.preventDefault();
     event.stopPropagation();
   },

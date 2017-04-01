@@ -3,6 +3,10 @@ import TreeNodeMixin from './mixins/tree-node';
 import computed from 'ember-computed';
 
 export default EmberObject.extend(TreeNodeMixin, {
+  collapse() {
+    this.set('expanded', false);
+  },
+
   depth: computed('parentNode.depth', function() {
     const parentNode = this.get('parentNode');
 
@@ -12,6 +16,10 @@ export default EmberObject.extend(TreeNodeMixin, {
       return 0;
     }
   }).readOnly(),
+
+  expand() {
+    this.set('expanded', true);
+  },
 
   expanded: false
 }).reopenClass({

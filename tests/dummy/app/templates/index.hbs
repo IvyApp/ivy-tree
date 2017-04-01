@@ -2,7 +2,12 @@
   <div class="col-sm-6">
     <h2 class="h3">WAI-ARIA Tree Example</h2>
 
-    {{#ivy-tree activate=(action (mut activeNode)) activeNode=activeNode model=model as |node|}}
+    {{#ivy-tree
+      activate=(action (mut activeNode))
+      activeNode=activeNode
+      collapse=(action 'collapse')
+      expand=(action 'expand')
+      model=model as |node|}}
       <span>
         {{#if node.hasChildNodes}}<span class="caret"></span>{{/if}}
         {{node.label}}

@@ -4,16 +4,6 @@ import computed, { readOnly } from 'ember-computed';
 import layout from '../templates/components/ivy-tree';
 
 export default Component.extend({
-  actions: {
-    expand(expanded, node) {
-      if (expanded) {
-        this.expandNode(node);
-      } else {
-        this.collapseNode(node);
-      }
-    }
-  },
-
   activateNode(node) {
     this.sendAction('activate', node);
   },
@@ -42,7 +32,7 @@ export default Component.extend({
   ],
 
   collapseNode(node) {
-    node.set('expanded', false);
+    this.sendAction('collapse', node);
   },
 
   expandAll() {
@@ -50,7 +40,7 @@ export default Component.extend({
   },
 
   expandNode(node) {
-    node.set('expanded', true);
+    this.sendAction('expand', node);
   },
 
   groupComponent: 'ivy-tree-group',
