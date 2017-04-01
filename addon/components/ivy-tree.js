@@ -1,6 +1,6 @@
 import Component from 'ember-component';
-import TreeNode from '../tree-node';
 import computed, { readOnly } from 'ember-computed';
+import get from 'ember-metal/get';
 import layout from '../templates/components/ivy-tree';
 
 export default Component.extend({
@@ -15,11 +15,15 @@ export default Component.extend({
       return;
     }
 
-    // If activeNode is a TreeNode, grab its ID. Otherwise we assume
-    // activeNode was given as an ID already.
-    const id = TreeNode.detectInstance(activeNode) ? activeNode.get('id') : activeNode;
-
-    return this._idToItem[id];
+    switch (typeof activeNode) {
+    case 'number':
+    case 'string':
+      // If activeNode is given as an ID, perform the lookup.
+      return this._idToItem[activeNode];
+    default:
+      // Otherwise, assume the activeNode is a TreeNode and lookup its ID.
+      return this._idToItem[get(activeNode, 'id')];
+    }
   }).readOnly(),
 
   ariaActiveDescendant: readOnly('activeDescendant.elementId'),
